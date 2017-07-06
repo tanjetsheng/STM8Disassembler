@@ -22,8 +22,11 @@
 
 :environment:
 
+:module_generator:
+  :naming: bumpy
+  
 :extension:
-  :executable: .out
+  :executable: .exe
 
 :paths:
   :test:
