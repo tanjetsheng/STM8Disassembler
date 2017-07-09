@@ -13,7 +13,7 @@ void test_Disassembler_(void)
   uint8_t *code = memory;
   memory[0] = 0xA9;
   memory[1] = 0x23;
-  disassembler(&code);
+  UseTable(&code);
  
  char* result = ADCbyte(0xA923);
  TEST_ASSERT_EQUAL_STRING("ADC  A #$,23",result);
