@@ -60,8 +60,14 @@ void test_ADClongoff_(void)
 
 void test_ADCY_(void)
 {
+    CEXCEPTION_T ex;
 	char* buffer;
 	uint8_t memory[]= {0x90,0xF9};
-	TEST_ASSERT_EQUAL_STRING("ADC  A,(Y)",buffer = disassembler(memory));
+	Try{
+		TEST_ASSERT_EQUAL_STRING("ADC  A,(Y)",buffer = disassembler(memory));
+		
+	}Catch(ex){
+		dumpException(ex);
+	}
 	free(buffer);
 }

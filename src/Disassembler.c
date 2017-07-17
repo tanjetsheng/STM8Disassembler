@@ -11,6 +11,7 @@
 char code[8*KB];
 char memory[20*KB];
 
+char* _disassembler(uint8_t *code);		// used internally
 
 Opcode opcodeTable72[256] = {
 };
@@ -30,7 +31,7 @@ Opcode opcodeTable[256] = {
   [0xD9] = {ADClongoff,3,1}
 };
 
-Opcode data;
+/*Opcode data;
 int ditermineCode(uint8_t *code){    //seperate into several 8bit code 
   if(data.length == 2){             
   code[1] = *code&0x00FF;
@@ -55,18 +56,18 @@ int ditermineCode(uint8_t *code){    //seperate into several 8bit code
   }
   else
     return 0;
-}
+}*/
 
-char* error(uint8_t *code){
-  if(opcodeTable[code[0]].execute(code) == NULL){
+char* disassembler(uint8_t *code){
+  if(opcodeTable[code[0]].execute == NULL){
   Throw(createException("invalid instruction",*code));
   }
   else{
-    disassembler(code);
+    _disassembler(code);
   }
  }
  
-char* disassembler(uint8_t *code){               //check the first byte so that can
+char* _disassembler(uint8_t *code){               //check the first byte so that can
                         //determine to use which table
 	if(code[0] == 72){                     
 		return opcodeTable72[code[1]].execute(code);
