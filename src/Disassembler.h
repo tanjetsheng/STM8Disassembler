@@ -80,6 +80,14 @@ char* INCshortptrX(uint8_t *code);
 char* INClongptrX(uint8_t *code);
 char* INCshortptrY(uint8_t *code);
 
+		//ADDW
+char* ADDWword(uint8_t *code);
+char* ADDWlongmem(uint8_t *code);
+char* ADDWshortoffSP(uint8_t *code);
+char* ADDWwordY(uint8_t *code);
+char* ADDWlongmemY(uint8_t *code);
+char* ADDWshortoffSPY(uint8_t *code);
+char* ADDWSP(uint8_t *code);
 
 char* disassembler(uint8_t *code);
 char* error(uint8_t *code);

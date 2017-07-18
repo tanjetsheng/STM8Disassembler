@@ -23,8 +23,13 @@ Opcode opcodeTable72[256] = {
   [0x5C] = {INClongmem,4,1},
   [0x4C] = {INClongoffX,4,1},
   [0x3C] = {INClongptr,4,4},
-  [0x6C] = {INClongptrX,4,4}
-  
+  [0x6C] = {INClongptrX,4,4},
+  [0xBB] = {ADDWlongmem,4,2},
+  [0xFB] = {ADDWshortoffSP,3,2},
+  [0xA9] = {ADDWwordY,4,2},
+  [0xB9] = {ADDWlongmemY,4,2},
+  [0xF9] = {ADDWshortoffSPY,3,2}
+
 };
 Opcode opcodeTable90[256] = {
   [0xF9] = {ADCY,2,1},
@@ -85,8 +90,11 @@ Opcode opcodeTable[256] = {
   [0X3C] = {INCshortmem,2,1},
   [0x7C] = {INCX,1,1},
   [0x6C] = {INCshortoffX,2,1},
-  [0x0C] = {INCshortoffSP,2,1}
-  
+  [0x0C] = {INCshortoffSP,2,1},
+  [0x1C] = {ADDWword,3,2},
+  [0x5B] = {ADDWSP,2,2}
+
+
 };
 
 
@@ -94,11 +102,11 @@ Opcode opcodeTable[256] = {
 
 char* disassembler(uint8_t *code){               //check the first byte so that can
                         //determine to use which table
-	if(code[0] == 0x72){   
+	if(code[0] == 0x72){
 		if(opcodeTable72[code[1]].execute == NULL){
       Throw(createException("invalid instruction",*code));
 	}
-		else{                  
+		else{
 		return opcodeTable72[code[1]].execute(code);
 	}
 	}
@@ -106,7 +114,7 @@ char* disassembler(uint8_t *code){               //check the first byte so that 
 		if(opcodeTable90[code[1]].execute == NULL){
       Throw(createException("invalid instruction",*code));
 	}
-		else{ 
+		else{
 	    return opcodeTable90[code[1]].execute(code);
 	}
 	}
@@ -114,7 +122,7 @@ char* disassembler(uint8_t *code){               //check the first byte so that 
 		if(opcodeTable91[code[1]].execute == NULL){
 	Throw(createException("invalid instruction",*code));
 	}
-		else{ 
+		else{
 		return opcodeTable91[code[1]].execute(code);
 	}
 	}
@@ -122,7 +130,7 @@ char* disassembler(uint8_t *code){               //check the first byte so that 
 		if(opcodeTable92[code[1]].execute == NULL){
 	Throw(createException("invalid instruction",*code));
 	}
-		else{ 
+		else{
 		return opcodeTable92[code[1]].execute(code);
 	}
 	}
@@ -130,7 +138,7 @@ char* disassembler(uint8_t *code){               //check the first byte so that 
 		if(opcodeTable[code[0]].execute == NULL){
 	Throw(createException("invalid instruction",*code));
 	}
-		else{ 
+		else{
 	return opcodeTable[code[0]].execute(code);
 	}
   }
@@ -138,7 +146,7 @@ char* disassembler(uint8_t *code){               //check the first byte so that 
 
 char* printError(uint8_t *code){
 
- CEXCEPTION_T ex; 
+ CEXCEPTION_T ex;
  Try{
   }
   Catch(ex){
@@ -147,9 +155,9 @@ char* printError(uint8_t *code){
 }
 
                /*ADC*/
-                
+
 char* ADCbyte(uint8_t *code){           //length 2
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,#$%x", code[1]);
   printf("ADC  A,#$%x",code[1]);
@@ -157,7 +165,7 @@ char* ADCbyte(uint8_t *code){           //length 2
 }
 
 char* ADCshortmem(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,$%x", code[1]);
   printf("ADC  A,$%x",code[1]);
@@ -165,7 +173,7 @@ char* ADCshortmem(uint8_t *code){
 }
 
 char* ADClongmem(uint8_t *code){        //length 3
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,$%x%x", code[1],code[2]);
   printf("ADC  A,$%x%x",code[1],code[2]);
@@ -173,7 +181,7 @@ char* ADClongmem(uint8_t *code){        //length 3
 }
 
 char* ADCX(uint8_t *code){            //length 1
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,(X)");
   printf("ADC  A,(X)");
@@ -181,31 +189,31 @@ char* ADCX(uint8_t *code){            //length 1
 }
 
 char* ADCshortoffX(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x,X)", code[1]);
   printf("ADC  A,($%x,X)",code[1]);
   return buffer;
 }
 
-char* ADClongoffX(uint8_t *code){       
-  
+char* ADClongoffX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x%x,X)", code[1],code[2]);
   printf("ADC  A,($%x%x,X)",code[1],code[2]);
   return buffer;
 }
 
-char* ADCY(uint8_t *code){          
-  
+char* ADCY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,(Y)");
   printf("ADC  A,(Y)");
   return buffer;
 }
 
-char* ADCshortoffY(uint8_t *code){       
-  
+char* ADCshortoffY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x,Y)",code[2]);
   printf("ADC  A,($%x,Y)",code[2]);
@@ -213,55 +221,55 @@ char* ADCshortoffY(uint8_t *code){
 }
 
 char* ADClongoffY(uint8_t *code){        //length 4
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x%x,Y)", code[2],code[3]);
   printf("ADC  A,($%x%x,Y)", code[2],code[3]);
   return buffer;
 }
 
-char* ADCshortoffSP(uint8_t *code){           
-  
+char* ADCshortoffSP(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x,SP)", code[1]);
   printf("ADC  A,($%x,SP)", code[1]);
   return buffer;
 }
 
-char* ADCshortptr(uint8_t *code){        
-  
+char* ADCshortptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x.w]", code[2]);
   printf("ADC  A,[$%x.w]",code[2]);
   return buffer;
 }
 
-char* ADClongptr(uint8_t *code){        
-  
+char* ADClongptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x%x.w]", code[2],code[3]);
   printf("ADC  A,[$%x%x.w]",code[2],code[3]);
   return buffer;
 }
 
-char* ADCshortptrX(uint8_t *code){        
-  
+char* ADCshortptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x.w],X",code[2]);
   printf("ADC  A,[$%x.w],X",code[2]);
   return buffer;
 }
 
-char* ADClongptrX(uint8_t *code){        
-  
+char* ADClongptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x%x.w],X",code[2],code[3]);
   printf("ADC  A,[$%x%x.w],X",code[2],code[3]);
   return buffer;
 }
 
-char* ADCshortptrY(uint8_t *code){        
-  
+char* ADCshortptrY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x.w],Y",code[2]);
   printf("ADC  A,[$%x.w],Y",code[2]);
@@ -270,9 +278,9 @@ char* ADCshortptrY(uint8_t *code){
 
 
                     /*ADD*/
-                    
+
 char* ADDbyte(uint8_t *code){           //length 2
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,#$%x", code[1]);
   printf("ADD  A,#$%x",code[1]);
@@ -280,7 +288,7 @@ char* ADDbyte(uint8_t *code){           //length 2
 }
 
 char* ADDshortmem(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,$%x", code[1]);
   printf("ADD  A,$%x",code[1]);
@@ -288,7 +296,7 @@ char* ADDshortmem(uint8_t *code){
 }
 
 char* ADDlongmem(uint8_t *code){        //length 3
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,$%x%x", code[1],code[2]);
   printf("ADD  A,$%x%x",code[1],code[2]);
@@ -296,7 +304,7 @@ char* ADDlongmem(uint8_t *code){        //length 3
 }
 
 char* ADDX(uint8_t *code){            //length 1
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,(X)");
   printf("ADD  A,(X)");
@@ -304,31 +312,31 @@ char* ADDX(uint8_t *code){            //length 1
 }
 
 char* ADDshortoffX(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,($%x,X)", code[1]);
   printf("ADD  A,($%x,X)",code[1]);
   return buffer;
 }
 
-char* ADDlongoffX(uint8_t *code){       
-  
+char* ADDlongoffX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,($%x%x,X)", code[1],code[2]);
   printf("ADD  A,($%x%x,X)",code[1],code[2]);
   return buffer;
 }
 
-char* ADDY(uint8_t *code){          
-  
+char* ADDY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,(Y)");
   printf("ADD  A,(Y)");
   return buffer;
 }
 
-char* ADDshortoffY(uint8_t *code){       
-  
+char* ADDshortoffY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,($%x,Y)",code[2]);
   printf("ADD  A,($%x,Y)",code[2]);
@@ -336,54 +344,54 @@ char* ADDshortoffY(uint8_t *code){
 }
 
 char* ADDlongoffY(uint8_t *code){        //length 4
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,($%x%x,Y)", code[2],code[3]);
   printf("ADD  A,($%x%x,Y)", code[2],code[3]);
   return buffer;
 }
 
-char* ADDshortoffSP(uint8_t *code){           
-  
+char* ADDshortoffSP(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,($%x,SP)", code[1]);
   printf("ADD  A,($%x,SP)", code[1]);
   return buffer;
 }
 
-char* ADDshortptr(uint8_t *code){        
-  
+char* ADDshortptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,[$%x.w]", code[2]);
   printf("ADD  A,[$%x.w]",code[2]);
   return buffer;
 }
 
-char* ADDlongptr(uint8_t *code){        
-  
+char* ADDlongptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,[$%x%x.w]", code[2],code[3]);
   printf("ADD  A,[$%x%x.w]",code[2],code[3]);
   return buffer;
 }
 
-char* ADDshortptrX(uint8_t *code){        
-  
+char* ADDshortptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,[$%x.w],X",code[2]);
   printf("ADD  A,[$%x.w],X",code[2]);
   return buffer;
 }
 
-char* ADDlongptrX(uint8_t *code){        
-  
+char* ADDlongptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,[$%x%x.w],X",code[2],code[3]);
   printf("ADD  A,[$%x%x.w],X",code[2],code[3]);
   return buffer;
 }
 
-char* ADDshortptrY(uint8_t *code){  
+char* ADDshortptrY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,[$%x.w],Y",code[2]);
@@ -392,9 +400,9 @@ char* ADDshortptrY(uint8_t *code){
 }
 
                     /*AND*/
-                    
+
 char* ANDbyte(uint8_t *code){           //length 2
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,#$%x", code[1]);
   printf("AND  A,#$%x",code[1]);
@@ -402,7 +410,7 @@ char* ANDbyte(uint8_t *code){           //length 2
 }
 
 char* ANDshortmem(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,$%x", code[1]);
   printf("AND  A,$%x",code[1]);
@@ -410,7 +418,7 @@ char* ANDshortmem(uint8_t *code){
 }
 
 char* ANDlongmem(uint8_t *code){        //length 3
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,$%x%x", code[1],code[2]);
   printf("AND  A,$%x%x",code[1],code[2]);
@@ -418,7 +426,7 @@ char* ANDlongmem(uint8_t *code){        //length 3
 }
 
 char* ANDX(uint8_t *code){            //length 1
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,(X)");
   printf("AND  A,(X)");
@@ -426,31 +434,31 @@ char* ANDX(uint8_t *code){            //length 1
 }
 
 char* ANDshortoffX(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,($%x,X)", code[1]);
   printf("AND  A,($%x,X)",code[1]);
   return buffer;
 }
 
-char* ANDlongoffX(uint8_t *code){       
-  
+char* ANDlongoffX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,($%x%x,X)", code[1],code[2]);
   printf("AND  A,($%x%x,X)",code[1],code[2]);
   return buffer;
 }
 
-char* ANDY(uint8_t *code){          
-  
+char* ANDY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,(Y)");
   printf("AND  A,(Y)");
   return buffer;
 }
 
-char* ANDshortoffY(uint8_t *code){       
-  
+char* ANDshortoffY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,($%x,Y)",code[2]);
   printf("AND  A,($%x,Y)",code[2]);
@@ -458,54 +466,54 @@ char* ANDshortoffY(uint8_t *code){
 }
 
 char* ANDlongoffY(uint8_t *code){        //length 4
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,($%x%x,Y)", code[2],code[3]);
   printf("AND  A,($%x%x,Y)", code[2],code[3]);
   return buffer;
 }
 
-char* ANDshortoffSP(uint8_t *code){           
-  
+char* ANDshortoffSP(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,($%x,SP)", code[1]);
   printf("AND  A,($%x,SP)", code[1]);
   return buffer;
 }
 
-char* ANDshortptr(uint8_t *code){        
-  
+char* ANDshortptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,[$%x.w]", code[2]);
   printf("AND  A,[$%x.w]",code[2]);
   return buffer;
 }
 
-char* ANDlongptr(uint8_t *code){        
-  
+char* ANDlongptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,[$%x%x.w]", code[2],code[3]);
   printf("AND  A,[$%x%x.w]",code[2],code[3]);
   return buffer;
 }
 
-char* ANDshortptrX(uint8_t *code){        
-  
+char* ANDshortptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,[$%x.w],X",code[2]);
   printf("AND  A,[$%x.w],X",code[2]);
   return buffer;
 }
 
-char* ANDlongptrX(uint8_t *code){        
-  
+char* ANDlongptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,[$%x%x.w],X",code[2],code[3]);
   printf("AND  A,[$%x%x.w],X",code[2],code[3]);
   return buffer;
 }
 
-char* ANDshortptrY(uint8_t *code){  
+char* ANDshortptrY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,[$%x.w],Y",code[2]);
@@ -514,9 +522,9 @@ char* ANDshortptrY(uint8_t *code){
 }
 
                    /*INC*/
-                    
+
 char* INCA(uint8_t *code){           //length 2
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"INC A");
   printf("INC A");
@@ -524,7 +532,7 @@ char* INCA(uint8_t *code){           //length 2
 }
 
 char* INCshortmem(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"INC$%x", code[1]);
   printf("INC$%x",code[1]);
@@ -532,7 +540,7 @@ char* INCshortmem(uint8_t *code){
 }
 
 char* INClongmem(uint8_t *code){        //length 4
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"INC$%x%x",code[2],code[3]);
   printf("INC$%x%x",code[2],code[3]);
@@ -540,7 +548,7 @@ char* INClongmem(uint8_t *code){        //length 4
 }
 
 char* INCX(uint8_t *code){            //length 1
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"INC(X)");
   printf("INC(X)");
@@ -548,31 +556,31 @@ char* INCX(uint8_t *code){            //length 1
 }
 
 char* INCshortoffX(uint8_t *code){
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"INC($%x,X)", code[1]);
   printf("INC($%x,X)",code[1]);
   return buffer;
 }
 
-char* INClongoffX(uint8_t *code){       
-  
+char* INClongoffX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC($%x%x,X)", code[2],code[3]);
   printf("INC($%x%x,X)",code[2],code[3]);
   return buffer;
 }
 
-char* INCY(uint8_t *code){          
-  
+char* INCY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC(Y)");
   printf("INC(Y)");
   return buffer;
 }
 
-char* INCshortoffY(uint8_t *code){       
-  
+char* INCshortoffY(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC($%x,Y)",code[2]);
   printf("INC($%x,Y)",code[2]);
@@ -580,54 +588,54 @@ char* INCshortoffY(uint8_t *code){
 }
 
 char* INClongoffY(uint8_t *code){        //length 4
-  
+
   buffer = malloc(1024);
   sprintf(buffer,"INC($%x%x,Y)", code[2],code[3]);
   printf("INC($%x%x,Y)", code[2],code[3]);
   return buffer;
 }
 
-char* INCshortoffSP(uint8_t *code){           
-  
+char* INCshortoffSP(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC($%x,SP)", code[1]);
   printf("INC($%x,SP)", code[1]);
   return buffer;
 }
 
-char* INCshortptr(uint8_t *code){        
-  
+char* INCshortptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC[$%x.w]", code[2]);
   printf("INC[$%x.w]",code[2]);
   return buffer;
 }
 
-char* INClongptr(uint8_t *code){        
-  
+char* INClongptr(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC[$%x%x.w]", code[2],code[3]);
   printf("INC[$%x%x.w]",code[2],code[3]);
   return buffer;
 }
 
-char* INCshortptrX(uint8_t *code){        
-  
+char* INCshortptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC[$%x.w],X",code[2]);
   printf("INC[$%x.w],X",code[2]);
   return buffer;
 }
 
-char* INClongptrX(uint8_t *code){        
-  
+char* INClongptrX(uint8_t *code){
+
   buffer = malloc(1024);
   sprintf(buffer,"INC[$%x%x.w],X",code[2],code[3]);
   printf("INC[$%x%x.w],X",code[2],code[3]);
   return buffer;
 }
 
-char* INCshortptrY(uint8_t *code){  
+char* INCshortptrY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"INC[$%x.w],Y",code[2]);
@@ -635,10 +643,59 @@ char* INCshortptrY(uint8_t *code){
   return buffer;
 }
 
+				/*ADDW*/
+char* ADDWword(uint8_t *code){
 
+  buffer = malloc(1024);
+  sprintf(buffer,"ADDW X,#$%x%x",code[1],code[2]);
+  printf("ADDW X,#$%x%x",code[1],code[2]);
+  return buffer;
+}
 
+char* ADDWlongmem(uint8_t *code){
 
+  buffer = malloc(1024);
+  sprintf(buffer,"ADDW X,$%x%x",code[2],code[3]);
+  printf("ADDW X,$%x%x",code[1],code[2]);
+  return buffer;
+}
 
+char* ADDWshortoffSP(uint8_t *code){
 
+  buffer = malloc(1024);
+  sprintf(buffer,"ADDW X,($%x,SP)",code[2]);
+  printf("ADDW X,($%x,SP)",code[2]);
+  return buffer;
+}
 
+char* ADDWwordY(uint8_t *code){
 
+  buffer = malloc(1024);
+  sprintf(buffer,"ADDW Y,#$%x%x",code[2],code[3]);
+  printf("ADDW Y,#$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* ADDWlongmemY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"ADDW Y,$%x%x",code[2],code[3]);
+  printf("ADDW Y,$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* ADDWshortoffSPY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"ADDW Y,($%x,SP)",code[2]);
+  printf("ADDW Y,($%x,SP)",code[2]);
+  return buffer;
+}
+
+char* ADDWSP(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"ADDW S,#$%x",code[1]);
+  printf("ADDW S,#$%x",code[1]);
+  return buffer;
+}

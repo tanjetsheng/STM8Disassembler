@@ -496,18 +496,59 @@ void test_INCshortptrY_(void)
 	free(buffer);
 }
 
+		//ADDW
+void test_ADDWword_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x1C,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("ADDW X,#$2233",buffer = disassembler(memory));
+	free(buffer);
+}
 
+void test_ADDWlongmem_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xBB,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("ADDW X,$2233",buffer = disassembler(memory));
+	free(buffer);
+}
 
+void test_ADDWshortoffSP_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xFB,0x22};
+	TEST_ASSERT_EQUAL_STRING("ADDW X,($22,SP)",buffer = disassembler(memory));
+	free(buffer);
+}
 
+void test_ADDWwordY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xA9,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("ADDW Y,#$2233",buffer = disassembler(memory));
+	free(buffer);
+}
 
+void test_ADDWlongmemY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xB9,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("ADDW Y,$2233",buffer = disassembler(memory));
+	free(buffer);
+}
 
+void test_ADDWshortoffSPY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xF9,0x22};
+	TEST_ASSERT_EQUAL_STRING("ADDW Y,($22,SP)",buffer = disassembler(memory));
+	free(buffer);
+}
 
-
-
-
-
-
-
-
-
-
+void test_ADDWSP_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x5B,0x22};
+	TEST_ASSERT_EQUAL_STRING("ADDW S,#$22",buffer = disassembler(memory));
+	free(buffer);
+}
