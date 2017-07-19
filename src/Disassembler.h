@@ -89,6 +89,23 @@ char* ADDWlongmemY(uint8_t *code);
 char* ADDWshortoffSPY(uint8_t *code);
 char* ADDWSP(uint8_t *code);
 
+    //BCP
+char* BCPbyte(uint8_t *code);
+char* BCPshortmem(uint8_t *code);
+char* BCPlongmem(uint8_t *code);
+char* BCPX(uint8_t *code);
+char* BCPshortoffX(uint8_t *code);
+char* BCPlongoffX(uint8_t *code);
+char* BCPY(uint8_t *code);
+char* BCPshortoffY(uint8_t *code);
+char* BCPlongoffY(uint8_t *code);
+char* BCPshortoffSP(uint8_t *code);
+char* BCPshortptr(uint8_t *code);
+char* BCPlongptr(uint8_t *code);
+char* BCPshortptrX(uint8_t *code);
+char* BCPlongptrX(uint8_t *code);
+char* BCPshortptrY(uint8_t *code);
+
 char* disassembler(uint8_t *code);
 char* error(uint8_t *code);
 char* printError(uint8_t *code);

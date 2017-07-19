@@ -28,7 +28,9 @@ Opcode opcodeTable72[256] = {
   [0xFB] = {ADDWshortoffSP,3,2},
   [0xA9] = {ADDWwordY,4,2},
   [0xB9] = {ADDWlongmemY,4,2},
-  [0xF9] = {ADDWshortoffSPY,3,2}
+  [0xF9] = {ADDWshortoffSPY,3,2},
+  [0xC5] = {BCPlongptr,4,4},
+  [0xD5] = {BCPlongptrX,4,4}
 
 };
 Opcode opcodeTable90[256] = {
@@ -43,14 +45,18 @@ Opcode opcodeTable90[256] = {
   [0xD4] = {ANDlongoffY,4,1},
   [0x7C] = {INCY,2,1},
   [0x6C] = {INCshortoffY,3,1},
-  [0x4C] = {INClongoffY,4,1}
+  [0x4C] = {INClongoffY,4,1},
+  [0xF5] = {BCPY,2,1},
+  [0xE5] = {BCPshortoffY,3,1},
+  [0xD5] = {BCPlongoffY,4,1}
 };
 
 Opcode opcodeTable91[256] = {
   [0xD9] = {ADCshortptrY,3,4},
   [0xDB] = {ADDshortptrY,3,4},
   [0xD4] = {ANDshortptrY,3,4},
-  [0x6C] = {INCshortptrY,3,4}
+  [0x6C] = {INCshortptrY,3,4},
+  [0xD5] = {BCPshortptrY,3,4}
 };
 
 Opcode opcodeTable92[256] = {
@@ -61,7 +67,9 @@ Opcode opcodeTable92[256] = {
   [0xC4] = {ANDshortptr,3,4},
   [0xD4] = {ANDshortptrX,3,4},
   [0x3C] = {INCshortptr,3,4},
-  [0x6C] = {INCshortptrX,3,4}
+  [0x6C] = {INCshortptrX,3,4},
+  [0xC5] = {BCPshortptr,3,4},
+  [0xD5] = {BCPshortptrX,3,4}
 };
 
 Opcode opcodeTable[256] = {
@@ -92,7 +100,14 @@ Opcode opcodeTable[256] = {
   [0x6C] = {INCshortoffX,2,1},
   [0x0C] = {INCshortoffSP,2,1},
   [0x1C] = {ADDWword,3,2},
-  [0x5B] = {ADDWSP,2,2}
+  [0x5B] = {ADDWSP,2,2},
+  [0xA5] = {BCPbyte,2 ,1},
+  [0xB5] = {BCPshortmem,2,1},
+  [0xC5] = {BCPlongmem,3,1},
+  [0xF5] = {BCPX,1,1},
+  [0xE5] = {BCPshortoffX,2,1},
+  [0xD5] = {BCPlongoffX,3,1},
+  [0x15] = {BCPshortoffSP,2,1},
 
 
 };
@@ -695,7 +710,128 @@ char* ADDWshortoffSPY(uint8_t *code){
 char* ADDWSP(uint8_t *code){
 
   buffer = malloc(1024);
-  sprintf(buffer,"ADDW S,#$%x",code[1]);
-  printf("ADDW S,#$%x",code[1]);
+  sprintf(buffer,"ADDW SP,#$%x",code[1]);
+  printf("ADDW SP,#$%x",code[1]);
+  return buffer;
+}
+
+        //BCP
+char* BCPbyte(uint8_t *code){           //length 2
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,#$%x", code[1]);
+  printf("BCP  A,#$%x",code[1]);
+  return buffer;
+}
+
+char* BCPshortmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,$%x", code[1]);
+  printf("BCP  A,$%x",code[1]);
+  return buffer;
+}
+
+char* BCPlongmem(uint8_t *code){        //length 3
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,$%x%x", code[1],code[2]);
+  printf("BCP  A,$%x%x",code[1],code[2]);
+  return buffer;
+}
+
+char* BCPX(uint8_t *code){            //length 1
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,(X)");
+  printf("BCP  A,(X)");
+  return buffer;
+}
+
+char* BCPshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,($%x,X)", code[1]);
+  printf("BCP  A,($%x,X)",code[1]);
+  return buffer;
+}
+
+char* BCPlongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,($%x%x,X)", code[1],code[2]);
+  printf("BCP  A,($%x%x,X)",code[1],code[2]);
+  return buffer;
+}
+
+char* BCPY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,(Y)");
+  printf("BCP  A,(Y)");
+  return buffer;
+}
+
+char* BCPshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,($%x,Y)",code[2]);
+  printf("BCP  A,($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* BCPlongoffY(uint8_t *code){        //length 4
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,($%x%x,Y)", code[2],code[3]);
+  printf("BCP  A,($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* BCPshortoffSP(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,($%x,SP)", code[1]);
+  printf("BCP  A,($%x,SP)", code[1]);
+  return buffer;
+}
+
+char* BCPshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,[$%x.w]", code[2]);
+  printf("BCP  A,[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* BCPlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,[$%x%x.w]", code[2],code[3]);
+  printf("BCP  A,[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* BCPshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,[$%x.w],X",code[2]);
+  printf("BCP  A,[$%x.w],X",code[2]);
+  return buffer;
+}
+
+char* BCPlongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,[$%x%x.w],X",code[2],code[3]);
+  printf("BCP  A,[$%x%x.w],X",code[2],code[3]);
+  return buffer;
+}
+
+char* BCPshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCP  A,[$%x.w],Y",code[2]);
+  printf("BCP  A,[$%x.w],Y",code[2]);
   return buffer;
 }

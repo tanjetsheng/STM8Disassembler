@@ -549,6 +549,129 @@ void test_ADDWSP_(void)
 {
 	char* buffer;
 	uint8_t memory[]= {0x5B,0x22};
-	TEST_ASSERT_EQUAL_STRING("ADDW S,#$22",buffer = disassembler(memory));
+	TEST_ASSERT_EQUAL_STRING("ADDW SP,#$22",buffer = disassembler(memory));
 	free(buffer);
 }
+
+			//BCP
+void test_BCPbyte_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xA5,0x23};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,#$23",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPshortmem_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xB5,0x24};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,$24",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPlongmem_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xC5,0x23,0x24};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,$2324",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xF5};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,(X)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPshortoffX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xE5,0x33};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,($33,X)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPlongoffX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xD5,0x33,0X44};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,($3344,X)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0xF5};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,(Y)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPshortoffY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0xE5,0x23};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,($23,Y)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPlongoffY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0xD5,0x23,0x33};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,($2333,Y)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPshortoffSP_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x15,0x23};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,($23,SP)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPshortptr_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x92,0xC5,0x22};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,[$22.w]",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPlongptr_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xC5,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,[$2233.w]",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPshortptrX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x92,0xD5,0x22};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,[$22.w],X",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPlongptrX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xD5,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,[$2233.w],X",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_BCPshortptrY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x91,0xD5,0x22};
+	TEST_ASSERT_EQUAL_STRING("BCP  A,[$22.w],Y",buffer = disassembler(memory));
+	free(buffer);
+}
+
+              /*AND*/
