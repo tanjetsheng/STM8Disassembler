@@ -30,7 +30,59 @@ Opcode opcodeTable72[256] = {
   [0xB9] = {ADDWlongmemY,4,2},
   [0xF9] = {ADDWshortoffSPY,3,2},
   [0xC5] = {BCPlongptr,4,4},
-  [0xD5] = {BCPlongptrX,4,4}
+  [0xD5] = {BCPlongptrX,4,4},
+  [0x11] = {BitReset,4,1},
+  [0x13] = {BitReset,4,1},
+  [0x15] = {BitReset,4,1},
+  [0x17] = {BitReset,4,1},
+  [0x19] = {BitReset,4,1},
+  [0x1B] = {BitReset,4,1},
+  [0x1D] = {BitReset,4,1},
+  [0x1F] = {BitReset,4,1},
+  [0x10] = {Bitset,4,1},
+  [0x12] = {Bitset,4,1},
+  [0x14] = {Bitset,4,1},
+  [0x16] = {Bitset,4,1},
+  [0x18] = {Bitset,4,1},
+  [0x1A] = {Bitset,4,1},
+  [0x1C] = {Bitset,4,1},
+  [0x1E] = {Bitset,4,1},
+  [0x01] = {BitTestJumpFalse,5,3/2},
+  [0x03] = {BitTestJumpFalse,5,3/2},
+  [0x05] = {BitTestJumpFalse,5,3/2},
+  [0x07] = {BitTestJumpFalse,5,3/2},
+  [0x09] = {BitTestJumpFalse,5,3/2},
+  [0x0B] = {BitTestJumpFalse,5,3/2},
+  [0x0D] = {BitTestJumpFalse,5,3/2},
+  [0x0F] = {BitTestJumpFalse,5,3/2},
+  [0x00] = {BitTestJumpTrue,4,1},
+  [0x02] = {BitTestJumpTrue,4,1},
+  [0x04] = {BitTestJumpTrue,4,1},
+  [0x06] = {BitTestJumpTrue,4,1},
+  [0x08] = {BitTestJumpTrue,4,1},
+  [0x0A] = {BitTestJumpTrue,4,1},
+  [0x0C] = {BitTestJumpTrue,4,1},
+  [0x0E] = {BitTestJumpTrue,4,1},
+  [0xCD] = {CALLlongptr,4,6},
+  [0xDD] = {CALLlongptrX,4,6},
+  [0x5F] = {CLRlongmem,4,1},
+  [0x4F] = {CLRlongoffX,4,1},
+  [0x3F] = {CLRlongptr,4,4},
+  [0x6F] = {CLRlongptrX,4,4},
+  [0xC1] = {CPlongptr,4,4},
+  [0xD1] = {CPlongptrX,4,4},
+  [0xC3] = {CPWlongptr_X,4,5},
+  [0xD3] = {CPWlongptrX_Y,4,5},
+  [0x53] = {CPLlongmem,4,1},
+  [0x43] = {CPLlongoffX,4,1},
+  [0x33] = {CPLlongptr,4,4},
+  [0x63] = {CPLlongptrX,4,4},
+  [0x5A] = {DEClongmem,4,1},
+  [0x4A] = {DEClongoffX,4,1},
+  [0x3A] = {DEClongptr,4,4},
+  [0x6A] = {DEClongptrX,4,4},
+
+
 
 };
 Opcode opcodeTable90[256] = {
@@ -48,7 +100,48 @@ Opcode opcodeTable90[256] = {
   [0x4C] = {INClongoffY,4,1},
   [0xF5] = {BCPY,2,1},
   [0xE5] = {BCPshortoffY,3,1},
-  [0xD5] = {BCPlongoffY,4,1}
+  [0xD5] = {BCPlongoffY,4,1},
+  [0x10] = {BitComplement,4,1},
+  [0x12] = {BitComplement,4,1},
+  [0x14] = {BitComplement,4,1},
+  [0x16] = {BitComplement,4,1},
+  [0x18] = {BitComplement,4,1},
+  [0x1A] = {BitComplement,4,1},
+  [0x1C] = {BitComplement,4,1},
+  [0x1E] = {BitComplement,4,1},
+  [0x11] = {BCCM,4,1},
+  [0x13] = {BCCM,4,1},
+  [0x15] = {BCCM,4,1},
+  [0x17] = {BCCM,4,1},
+  [0x19] = {BCCM,4,1},
+  [0x1B] = {BCCM,4,1},
+  [0x1D] = {BCCM,4,1},
+  [0x1F] = {BCCM,4,1},
+  [0XFD] = {CALLY,2,4},
+  [0xED] = {CALLshortoffY,3,4},
+  [0XDD] = {CALLlongoffY,4,4},
+  [0x7F] = {CLRY,2,1},
+  [0x6F] = {CLRshortoffY,3,1},
+  [0x4F] = {CLRlongoffY,4,1},
+  [0X5F] = {CLRWY,2,1},
+  [0xF1] = {CPY,2,1},
+  [0xE1] = {CPshortoffY,3,1},
+  [0xD1] = {CPlongoffY,4,1},
+  [0xF3] = {CPWY,2,2},
+  [0xE3] = {CPWshortoffY_X,3,2},
+  [0xD3] = {CPWlongoffY_X,4,2},
+  [0xA3] = {CPwordY,4,2},
+  [0xB3] = {CPWshortmem_Y,3,2},
+  [0xC3] = {CPWlongmem_Y,4,2},
+  [0x73] = {CPLY,2,1},
+  [0x63] = {CPLshortoffY,3,1},
+  [0x43] = {CPLlongoffY,4,1},
+  [0x53] = {CPLWY,2,2},
+  [0x7A] = {DECY,2,1},
+  [0x6A] = {DECshortoffY,3,1},
+  [0x4A] = {DEClongoffY,4,1},
+  [0x5A] = {DECWY,2,2}
+
 };
 
 Opcode opcodeTable91[256] = {
@@ -56,7 +149,14 @@ Opcode opcodeTable91[256] = {
   [0xDB] = {ADDshortptrY,3,4},
   [0xD4] = {ANDshortptrY,3,4},
   [0x6C] = {INCshortptrY,3,4},
-  [0xD5] = {BCPshortptrY,3,4}
+  [0xD5] = {BCPshortptrY,3,4},
+  [0xDD] = {CALLshortptrY,3,6},
+  [0x6F] = {CLRshortptrY,3,4},
+  [0xD1] = {CPshortptrY,3,4},
+  [0xD3] = {CPWshortptrY_X,3,5},
+  [0xC3] = {CPWshortptr_Y,3,5},
+  [0x63] = {CPLshortptrY,3,4},
+  [0x6A] = {DECshortptrY,3,4},
 };
 
 Opcode opcodeTable92[256] = {
@@ -69,7 +169,20 @@ Opcode opcodeTable92[256] = {
   [0x3C] = {INCshortptr,3,4},
   [0x6C] = {INCshortptrX,3,4},
   [0xC5] = {BCPshortptr,3,4},
-  [0xD5] = {BCPshortptrX,3,4}
+  [0xD5] = {BCPshortptrX,3,4},
+  [0xCD] = {CALLshortptr,3,6},
+  [0xDD] = {CALLshortptrX,3,6},
+  [0x8D] = {CALLFlongptr,4,8},
+  [0x3F] = {CLRshortptr,3,4},
+  [0x6F] = {CLRshortptrX,3,4},
+  [0xC1] = {CPshortptr,3,4},
+  [0xD1] = {CPshortptrX,3,4},
+  [0xC3] = {CPWshortptr_X,3,5},
+  [0xD3] = {CPWshortptrX_Y,3,5},
+  [0x33] = {CPLshortptr,3,4},
+  [0x63] = {CPLshortptrX,3,4},
+  [0x3A] = {DECshortptr,3,4},
+  [0x6A] = {DECshortptrX,3,4},
 };
 
 Opcode opcodeTable[256] = {
@@ -108,15 +221,53 @@ Opcode opcodeTable[256] = {
   [0xE5] = {BCPshortoffX,2,1},
   [0xD5] = {BCPlongoffX,3,1},
   [0x15] = {BCPshortoffSP,2,1},
+  [0X8B] = {BREAK,1,1},
+  [0XCD] = {CALLlongmem,4,3},
+  [0XFD] = {CALLX,1,4},
+  [0XED] = {CALLshortoffX,2,4},
+  [0xDD] = {CALLlongoffX,3,4},
+  [0xAD] = {CALLR,2,4},
+  [0x8D] = {CALLFextmem,4,5},
+  [0x8C] = {CCF,1,1},
+  [0x4F] = {CLRA,1,1},
+  [0X3F] = {CLRshortmem,2,1},
+  [0x7F] = {CLRX,1,1},
+  [0x6F] = {CLRshortoffX,2,1},
+  [0x0F] = {CLRshortoffSP,2,1},
+  [0X5F] = {CLRWX,1,1},
+  [0xA1] = {CPbyte,2,1},
+  [0xB1] = {CPshortmem,2,1},
+  [0xC1] = {CPlongmem,3,1},
+  [0xF1] = {CPX,1,1},
+  [0xE1] = {CPshortoffX,2,1},
+  [0xD1] = {CPlongoffX,3,1},
+  [0x11] = {CPshortoffSP,2,1},
+  [0xA3] = {CPwordX,3,2},
+  [0xB3] = {CPWshortmemX,2,2},
+  [0xC3] = {CPWlongmemX,3,2},
+  [0x13] = {CPWshortoffSP_X,2,2},
+  [0xF3] = {CPWX,1,2},
+  [0xE3] = {CPWshortoffX_Y,2,2},
+  [0xD3] = {CPWlongoffX_Y,3,2},
+  [0x43] = {CPLA,1,1},
+  [0X33] = {CPLshortmem,2,1},
+  [0x73] = {CPLX,1,1},
+  [0x63] = {CPLshortoffX,2,1},
+  [0x03] = {CPLshortoffSP,2,1},
+  [0x53] = {CPLWX,1,2},
+  [0x4A] = {DECA,1,1},
+  [0X3A] = {DECshortmem,2,1},
+  [0x7A] = {DECX,1,1},
+  [0x6A] = {DECshortoffX,2,1},
+  [0x0A] = {DECshortoffSP,2,1},
+  [0x5A] = {DECWX,1,2}
 
 
 };
 
-
-
-
-char* disassembler(uint8_t *code){               //check the first byte so that can
-                        //determine to use which table
+char* disassembler(uint8_t *code){
+            //check the first byte so that can
+              //determine to use which table
 	if(code[0] == 0x72){
 		if(opcodeTable72[code[1]].execute == NULL){
       Throw(createException("invalid instruction",*code));
@@ -294,7 +445,7 @@ char* ADCshortptrY(uint8_t *code){
 
                     /*ADD*/
 
-char* ADDbyte(uint8_t *code){           //length 2
+char* ADDbyte(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,#$%x", code[1]);
@@ -310,7 +461,7 @@ char* ADDshortmem(uint8_t *code){
   return buffer;
 }
 
-char* ADDlongmem(uint8_t *code){        //length 3
+char* ADDlongmem(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,$%x%x", code[1],code[2]);
@@ -318,7 +469,7 @@ char* ADDlongmem(uint8_t *code){        //length 3
   return buffer;
 }
 
-char* ADDX(uint8_t *code){            //length 1
+char* ADDX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,(X)");
@@ -358,7 +509,7 @@ char* ADDshortoffY(uint8_t *code){
   return buffer;
 }
 
-char* ADDlongoffY(uint8_t *code){        //length 4
+char* ADDlongoffY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADD  A,($%x%x,Y)", code[2],code[3]);
@@ -416,7 +567,7 @@ char* ADDshortptrY(uint8_t *code){
 
                     /*AND*/
 
-char* ANDbyte(uint8_t *code){           //length 2
+char* ANDbyte(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,#$%x", code[1]);
@@ -432,7 +583,7 @@ char* ANDshortmem(uint8_t *code){
   return buffer;
 }
 
-char* ANDlongmem(uint8_t *code){        //length 3
+char* ANDlongmem(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,$%x%x", code[1],code[2]);
@@ -440,7 +591,7 @@ char* ANDlongmem(uint8_t *code){        //length 3
   return buffer;
 }
 
-char* ANDX(uint8_t *code){            //length 1
+char* ANDX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,(X)");
@@ -480,7 +631,7 @@ char* ANDshortoffY(uint8_t *code){
   return buffer;
 }
 
-char* ANDlongoffY(uint8_t *code){        //length 4
+char* ANDlongoffY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"AND  A,($%x%x,Y)", code[2],code[3]);
@@ -538,7 +689,7 @@ char* ANDshortptrY(uint8_t *code){
 
                    /*INC*/
 
-char* INCA(uint8_t *code){           //length 2
+char* INCA(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"INC A");
@@ -554,7 +705,7 @@ char* INCshortmem(uint8_t *code){
   return buffer;
 }
 
-char* INClongmem(uint8_t *code){        //length 4
+char* INClongmem(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"INC$%x%x",code[2],code[3]);
@@ -562,7 +713,7 @@ char* INClongmem(uint8_t *code){        //length 4
   return buffer;
 }
 
-char* INCX(uint8_t *code){            //length 1
+char* INCX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"INC(X)");
@@ -602,7 +753,7 @@ char* INCshortoffY(uint8_t *code){
   return buffer;
 }
 
-char* INClongoffY(uint8_t *code){        //length 4
+char* INClongoffY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"INC($%x%x,Y)", code[2],code[3]);
@@ -716,7 +867,7 @@ char* ADDWSP(uint8_t *code){
 }
 
         //BCP
-char* BCPbyte(uint8_t *code){           //length 2
+char* BCPbyte(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"BCP  A,#$%x", code[1]);
@@ -732,7 +883,7 @@ char* BCPshortmem(uint8_t *code){
   return buffer;
 }
 
-char* BCPlongmem(uint8_t *code){        //length 3
+char* BCPlongmem(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"BCP  A,$%x%x", code[1],code[2]);
@@ -740,7 +891,7 @@ char* BCPlongmem(uint8_t *code){        //length 3
   return buffer;
 }
 
-char* BCPX(uint8_t *code){            //length 1
+char* BCPX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"BCP  A,(X)");
@@ -780,7 +931,7 @@ char* BCPshortoffY(uint8_t *code){
   return buffer;
 }
 
-char* BCPlongoffY(uint8_t *code){        //length 4
+char* BCPlongoffY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"BCP  A,($%x%x,Y)", code[2],code[3]);
@@ -833,5 +984,875 @@ char* BCPshortptrY(uint8_t *code){
   buffer = malloc(1024);
   sprintf(buffer,"BCP  A,[$%x.w],Y",code[2]);
   printf("BCP  A,[$%x.w],Y",code[2]);
+  return buffer;
+}
+
+char* BREAK(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BREAK");
+  printf("BREAK");
+  return buffer;
+}
+
+char* BitComplement(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCPL $%x%x,#2", code[2],code[3]);
+  printf("BCPL $%x%x,#2", code[2],code[3]);
+  return buffer;
+}
+
+char* BCCM(uint8_t *code){        //copy carry bit to memory
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BCCM $%x%x,#2", code[2],code[3]);
+  printf("BCCM $%x%x,#2", code[2],code[3]);
+  return buffer;
+}
+
+char* BitReset(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BRES $%x%x,#7", code[2],code[3]);
+  printf("BRES $%x%x,#7", code[2],code[3]);
+  return buffer;
+}
+
+char* Bitset(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BSET $%x%x,#1", code[2],code[3]);
+  printf("BSET $%x%x,#1", code[2],code[3]);
+  return buffer;
+}
+
+char* BitTestJumpFalse(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BTJF $%x%x,#1,%x", code[2],code[3],code[4]);
+  printf("BTJF $%x%x,#1,%x", code[2],code[3],code[4]);
+  return buffer;
+}
+
+char* BitTestJumpTrue(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"BTJT $%x%x,#1,%x", code[2],code[3],code[4]);
+  printf("BTJT $%x%x,#1,%x", code[2],code[3],code[4]);
+  return buffer;
+}
+
+      //CALL
+char* CALLlongmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL$%x%x",code[1],code[2]);
+  printf("CALL$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* CALLX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL(X)");
+  printf("CALL(X)");
+  return buffer;
+}
+
+char* CALLshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL($%x,X)", code[1]);
+  printf("CALL($%x,X)",code[1]);
+  return buffer;
+}
+
+char* CALLlongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL($%x%x,X)", code[1],code[2]);
+  printf("CALL($%x%x,X)",code[1],code[2]);
+  return buffer;
+}
+
+char* CALLY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL(Y)");
+  printf("CALL(Y)");
+  return buffer;
+}
+
+char* CALLshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL($%x,Y)",code[2]);
+  printf("CALL($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* CALLlongoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL($%x%x,Y)", code[2],code[3]);
+  printf("CALL($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* CALLshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL[$%x.w]", code[2]);
+  printf("CALL[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* CALLlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL[$%x%x.w]", code[2],code[3]);
+  printf("CALL[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* CALLshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL[$%x.w],X",code[2]);
+  printf("CALL[$%x.w],X",code[2]);
+  return buffer;
+}
+
+char* CALLlongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL[$%x%x.w],X",code[2],code[3]);
+  printf("CALL[$%x%x.w],X",code[2],code[3]);
+  return buffer;
+}
+
+char* CALLshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALL[$%x.w],Y",code[2]);
+  printf("CALL[$%x.w],Y",code[2]);
+  return buffer;
+}
+
+char* CALLR(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALLR$%x",code[1]);
+  printf("CALLR$%x",code[1]);
+  return buffer;
+}
+
+char* CALLFextmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALLF $%x%x%x",code[1],code[2],code[3]);
+  printf("CALLF $%x%x%x",code[1],code[2],code[3]);
+  return buffer;
+}
+
+char* CALLFlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CALLF [$%x%x.e]",code[2],code[3]);
+  printf("CALLF [$%x%x.e]",code[2],code[3]);
+  return buffer;
+}
+
+char* CCF(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CCF");
+  printf("CCF");
+  return buffer;
+}
+
+      //clear
+
+char* CLRA(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR A");
+  printf("CLR A");
+  return buffer;
+}
+
+char* CLRshortmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR$%x", code[1]);
+  printf("CLR$%x",code[1]);
+  return buffer;
+}
+
+char* CLRlongmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR$%x%x",code[2],code[3]);
+  printf("CLR$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* CLRX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR(X)");
+  printf("CLR(X)");
+  return buffer;
+}
+
+char* CLRshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR($%x,X)", code[1]);
+  printf("CLR($%x,X)",code[1]);
+  return buffer;
+}
+
+char* CLRlongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR($%x%x,X)", code[2],code[3]);
+  printf("CLR($%x%x,X)",code[2],code[3]);
+  return buffer;
+}
+
+char* CLRY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR(Y)");
+  printf("CLR(Y)");
+  return buffer;
+}
+
+char* CLRshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR($%x,Y)",code[2]);
+  printf("CLR($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* CLRlongoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR($%x%x,Y)", code[2],code[3]);
+  printf("CLR($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* CLRshortoffSP(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR($%x,SP)", code[1]);
+  printf("CLR($%x,SP)", code[1]);
+  return buffer;
+}
+
+char* CLRshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR[$%x.w]", code[2]);
+  printf("CLR[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* CLRlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR[$%x%x.w]", code[2],code[3]);
+  printf("CLR[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* CLRshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR[$%x.w],X",code[2]);
+  printf("CLR[$%x.w],X",code[2]);
+  return buffer;
+}
+
+char* CLRlongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR[$%x%x.w],X",code[2],code[3]);
+  printf("CLR[$%x%x.w],X",code[2],code[3]);
+  return buffer;
+}
+
+char* CLRshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLR[$%x.w],Y",code[2]);
+  printf("CLR[$%x.w],Y",code[2]);
+  return buffer;
+}
+
+char* CLRWX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLRW X");
+  printf("CLRW X");
+  return buffer;
+}
+
+char* CLRWY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CLRW Y");
+  printf("CLRW Y");
+  return buffer;
+}
+
+      //compare
+char* CPbyte(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,#$%x", code[1]);
+  printf("CP  A,#$%x",code[1]);
+  return buffer;
+}
+
+char* CPshortmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,$%x", code[1]);
+  printf("CP  A,$%x",code[1]);
+  return buffer;
+}
+
+char* CPlongmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,$%x%x", code[1],code[2]);
+  printf("CP  A,$%x%x",code[1],code[2]);
+  return buffer;
+}
+
+char* CPX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,(X)");
+  printf("CP  A,(X)");
+  return buffer;
+}
+
+char* CPshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,($%x,X)", code[1]);
+  printf("CP  A,($%x,X)",code[1]);
+  return buffer;
+}
+
+char* CPlongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,($%x%x,X)", code[1],code[2]);
+  printf("CP  A,($%x%x,X)",code[1],code[2]);
+  return buffer;
+}
+
+char* CPY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,(Y)");
+  printf("CP  A,(Y)");
+  return buffer;
+}
+
+char* CPshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,($%x,Y)",code[2]);
+  printf("CP  A,($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* CPlongoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,($%x%x,Y)", code[2],code[3]);
+  printf("CP  A,($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* CPshortoffSP(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,($%x,SP)", code[1]);
+  printf("CP  A,($%x,SP)", code[1]);
+  return buffer;
+}
+
+char* CPshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,[$%x.w]", code[2]);
+  printf("CP  A,[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* CPlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,[$%x%x.w]", code[2],code[3]);
+  printf("CP  A,[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* CPshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,[$%x.w],X",code[2]);
+  printf("CP  A,[$%x.w],X",code[2]);
+  return buffer;
+}
+
+char* CPlongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,[$%x%x.w],X",code[2],code[3]);
+  printf("CP  A,[$%x%x.w],X",code[2],code[3]);
+  return buffer;
+}
+
+char* CPshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CP  A,[$%x.w],Y",code[2]);
+  printf("CP  A,[$%x.w],Y",code[2]);
+  return buffer;
+}
+
+char* CPwordX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,#$%x%x", code[1],code[2]);
+  printf("CPW X,#$%x%x", code[1],code[2]);
+  return buffer;
+}
+
+char* CPWshortmemX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,$%x", code[1]);
+  printf("CPW X,$%x",code[1]);
+  return buffer;
+}
+
+char* CPWlongmemX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,$%x%x", code[1],code[2]);
+  printf("CPW X,$%x%x",code[1],code[2]);
+  return buffer;
+}
+
+char* CPWY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,(Y)");
+  printf("CPW X,(Y)");
+  return buffer;
+}
+
+char* CPWshortoffY_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,($%x,Y)",code[2]);
+  printf("CPW X,($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* CPWlongoffY_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,($%x%x,Y)", code[2],code[3]);
+  printf("CPW X,($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* CPWshortoffSP_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,($%x,SP)", code[1]);
+  printf("CPW X,($%x,SP)", code[1]);
+  return buffer;
+}
+
+char* CPWshortptr_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,[$%x.w]", code[2]);
+  printf("CPW X,[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* CPWlongptr_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,[$%x%x.w]", code[2],code[3]);
+  printf("CPW X,[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* CPWshortptrY_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW X,[$%x.w],Y",code[2]);
+  printf("CPW X,[$%x.w],Y",code[2]);
+  return buffer;
+}
+
+char* CPwordY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,#$%x%x", code[2],code[3]);
+  printf("CPW Y,#$%x%x", code[2],code[3]);
+  return buffer;
+}
+
+char* CPWshortmem_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,$%x", code[2]);
+  printf("CPW Y,$%x",code[2]);
+  return buffer;
+}
+
+char* CPWlongmem_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,$%x%x", code[2],code[3]);
+  printf("CPW Y,$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* CPWX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,(X)");
+  printf("CPW Y,(X)");
+  return buffer;
+}
+
+char* CPWshortoffX_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,($%x,X)",code[1]);
+  printf("CPW Y,($%x,X)",code[1]);
+  return buffer;
+}
+
+char* CPWlongoffX_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,($%x%x,X)", code[1],code[2]);
+  printf("CPW Y,($%x%x,X)", code[1],code[2]);
+  return buffer;
+}
+
+char* CPWshortptr_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,[$%x.w]", code[2]);
+  printf("CPW Y,[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* CPWshortptrX_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,([$%x.w],X)", code[2]);
+  printf("CPW Y,([$%x.w],X)",code[2]);
+  return buffer;
+}
+
+char* CPWlongptrX_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPW Y,([$%x%x.w],X)",code[2],code[3]);
+  printf("CPW Y,([$%x%x.w],X)",code[2],code[3]);
+  return buffer;
+}
+
+      //CPL
+char* CPLA(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL A");
+  printf("CPL A");
+  return buffer;
+}
+
+char* CPLshortmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL$%x", code[1]);
+  printf("CPL$%x",code[1]);
+  return buffer;
+}
+
+char* CPLlongmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL$%x%x",code[2],code[3]);
+  printf("CPL$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* CPLX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL(X)");
+  printf("CPL(X)");
+  return buffer;
+}
+
+char* CPLshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL($%x,X)", code[1]);
+  printf("CPL($%x,X)",code[1]);
+  return buffer;
+}
+
+char* CPLlongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL($%x%x,X)", code[2],code[3]);
+  printf("CPL($%x%x,X)",code[2],code[3]);
+  return buffer;
+}
+
+char* CPLY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL(Y)");
+  printf("CPL(Y)");
+  return buffer;
+}
+
+char* CPLshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL($%x,Y)",code[2]);
+  printf("CPL($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* CPLlongoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL($%x%x,Y)", code[2],code[3]);
+  printf("CPL($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* CPLshortoffSP(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL($%x,SP)", code[1]);
+  printf("CPL($%x,SP)", code[1]);
+  return buffer;
+}
+
+char* CPLshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL[$%x.w]", code[2]);
+  printf("CPL[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* CPLlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL[$%x%x.w]", code[2],code[3]);
+  printf("CPL[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* CPLshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL[$%x.w],X",code[2]);
+  printf("CPL[$%x.w],X",code[2]);
+  return buffer;
+}
+
+char* CPLlongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL[$%x%x.w],X",code[2],code[3]);
+  printf("CPL[$%x%x.w],X",code[2],code[3]);
+  return buffer;
+}
+
+char* CPLshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPL[$%x],Y",code[2]);
+  printf("CPL[$%x],Y",code[2]);
+  return buffer;
+}
+
+char* CPLWX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPLW X");
+  printf("CPLW X");
+  return buffer;
+}
+
+char* CPLWY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"CPLW Y");
+  printf("CPLW Y");
+  return buffer;
+}
+
+      //DECREMENT
+char* DECA(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC A");
+  printf("DEC A");
+  return buffer;
+}
+
+char* DECshortmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC$%x", code[1]);
+  printf("DEC$%x",code[1]);
+  return buffer;
+}
+
+char* DEClongmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC$%x%x",code[2],code[3]);
+  printf("DEC$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* DECX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC(X)");
+  printf("DEC(X)");
+  return buffer;
+}
+
+char* DECshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC($%x,X)", code[1]);
+  printf("DEC($%x,X)",code[1]);
+  return buffer;
+}
+
+char* DEClongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC($%x%x,X)", code[2],code[3]);
+  printf("DEC($%x%x,X)",code[2],code[3]);
+  return buffer;
+}
+
+char* DECY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC(Y)");
+  printf("DEC(Y)");
+  return buffer;
+}
+
+char* DECshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC($%x,Y)",code[2]);
+  printf("DEC($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* DEClongoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC($%x%x,Y)", code[2],code[3]);
+  printf("DEC($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* DECshortoffSP(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC($%x,SP)", code[1]);
+  printf("DEC($%x,SP)", code[1]);
+  return buffer;
+}
+
+char* DECshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC[$%x.w]", code[2]);
+  printf("DEC[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* DEClongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC[$%x%x.w]", code[2],code[3]);
+  printf("DEC[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* DECshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC[$%x.w],X",code[2]);
+  printf("DEC[$%x.w],X",code[2]);
+  return buffer;
+}
+
+char* DEClongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC[$%x%x.w],X",code[2],code[3]);
+  printf("DEC[$%x%x.w],X",code[2],code[3]);
+  return buffer;
+}
+
+char* DECshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DEC[$%x],Y",code[2]);
+  printf("DEC[$%x],Y",code[2]);
+  return buffer;
+}
+
+char* DECWX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DECW X");
+  printf("DECW X");
+  return buffer;
+}
+
+char* DECWY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DECW Y");
+  printf("DECW Y");
   return buffer;
 }
