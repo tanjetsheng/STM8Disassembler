@@ -11,7 +11,7 @@ void setUp(void)
 void tearDown(void)
 {}
           /*ADC*/
-					/*
+
 void test_ADCbyte_(void)
 {
 	char* buffer;
@@ -133,8 +133,8 @@ void test_ADCshortptrY_(void)
 }
 
 
-              /*ADD*/
-/*void test_ADDbyte_(void)
+              //ADD
+void test_ADDbyte_(void)
 {
 	char* buffer;
 	uint8_t memory[]= {0xAB,0x23};
@@ -254,8 +254,8 @@ void test_ADDshortptrY_(void)
 	free(buffer);
 }
 
-              /*AND*/
-/*void test_ANDbyte_(void)
+              //AND
+void test_ANDbyte_(void)
 {
 	char* buffer;
 	uint8_t memory[]= {0xA4,0x23};
@@ -376,8 +376,8 @@ void test_ANDshortptrY_(void)
 }
 
 
-              /*INC*/
-/*void test_INCA_(void)
+              //INC
+void test_INCA_(void)
 {
 	char* buffer;
 	uint8_t memory[]= {0x4C};
@@ -497,6 +497,21 @@ void test_INCshortptrY_(void)
 	free(buffer);
 }
 
+void test_INCWord_X_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x5C};
+	TEST_ASSERT_EQUAL_STRING("INCW X",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_INCWord_Y_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x5C};
+	TEST_ASSERT_EQUAL_STRING("INCW Y",buffer = disassembler(memory));
+	free(buffer);
+}
 		//ADDW
 void test_ADDWword_(void)
 {
@@ -995,7 +1010,7 @@ void test_CLRWY_(void)
 	TEST_ASSERT_EQUAL_STRING("CLRW Y",buffer = disassembler(memory));
 	free(buffer);
 }
-*/
+
 			//compare
 void test_CPbyte_(void)
 {
@@ -1538,5 +1553,407 @@ void test_DECWY_(void)
 	char* buffer;
 	uint8_t memory[]= {0x90,0x5A};
 	TEST_ASSERT_EQUAL_STRING("DECW Y",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_DivideUnsignedX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x62};
+	TEST_ASSERT_EQUAL_STRING("DIV X,A",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_DivideUnsignedY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x62};
+	TEST_ASSERT_EQUAL_STRING("DIV Y,A",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_DivideSigned_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x65};
+	TEST_ASSERT_EQUAL_STRING("DIV X,Y",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_EXG_X_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x41};
+	TEST_ASSERT_EQUAL_STRING("EXG A,XL",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_EXG_Y_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x61};
+	TEST_ASSERT_EQUAL_STRING("EXG A,YL",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_EXG_longmem_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x31,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("EXG A,$2233",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_EXGW_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x51};
+	TEST_ASSERT_EQUAL_STRING("EXGW X,Y",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_HALT_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x8E};
+	TEST_ASSERT_EQUAL_STRING("HALT",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_Interrupt_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x82,0x22,0x33,0x44};
+	TEST_ASSERT_EQUAL_STRING("INT $223344",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_InterruptReturn_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x80};
+	TEST_ASSERT_EQUAL_STRING("IRET",buffer = disassembler(memory));
+	free(buffer);
+}
+
+				//JUMP
+void test_JPlongmem_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xCC,0x23,0x24};
+	TEST_ASSERT_EQUAL_STRING("JP$2324",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xFC};
+	TEST_ASSERT_EQUAL_STRING("JP(X)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPshortoffX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xEC,0x33};
+	TEST_ASSERT_EQUAL_STRING("JP($33,X)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPlongoffX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xDC,0X44,0X55};
+	TEST_ASSERT_EQUAL_STRING("JP($4455,X)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0xFC};
+	TEST_ASSERT_EQUAL_STRING("JP(Y)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPshortoffY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0xEC,0x23};
+	TEST_ASSERT_EQUAL_STRING("JP($23,Y)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPlongoffY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0xDC,0x23,0x33};
+	TEST_ASSERT_EQUAL_STRING("JP($2333,Y)",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPshortptr_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x92,0xCC,0x22};
+	TEST_ASSERT_EQUAL_STRING("JP[$22.w]",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPlongptr_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xCC,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("JP[$2233.w]",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPshortptrX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x92,0xDC,0x22};
+	TEST_ASSERT_EQUAL_STRING("JP[$22.w],X",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPlongptrX_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x72,0xDC,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("JP[$2233.w],X",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPshortptrY_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x91,0xDC,0x22};
+	TEST_ASSERT_EQUAL_STRING("JP[$22.w],Y",buffer = disassembler(memory));
+	free(buffer);
+}
+
+
+void test_JPFextmem_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0xAC,0x22,0x33,0x44};
+	TEST_ASSERT_EQUAL_STRING("JPF $223344",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JPFlongptr_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x92,0xAC,0x22,0x33};
+	TEST_ASSERT_EQUAL_STRING("JPF [$2233.e]",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_JumpRelativeAlways_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x20,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRA $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_Carry_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x25,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRC $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_Equal_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x27,0x22};
+	TEST_ASSERT_EQUAL_STRING("JREQ $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_False_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x21,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRF $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_HalfCarry_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x29,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRH $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_InterruptHigh_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x2F,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRIH $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_InterruptLow_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x2E,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRIL $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_InterruptMask_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x2D,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRM $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_Minus_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x2B,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRMI $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_NotCarry_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x24,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRNC $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_NotEqual_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x26,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRNE $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_NotHalfCarry_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x28,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRNH $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_NotInterruptMask_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x90,0x2C,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRNM $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_NotOverflow_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x28,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRNV $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_Plus_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x2A,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRPL $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_SignGreaterOrEqual_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x2E,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRSGE $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_SignGreaterThan_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x2C,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRSGT $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_SignLowerOrEqual_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x2D,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRSLE $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_SignLowerThan_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x2F,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRSLT $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_True_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x20,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRT $22",buffer = disassembler(memory));
+	free(buffer);
+}*/
+
+/*void test_UnsignGreaterOrEqual_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x24,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRUGE $22",buffer = disassembler(memory));
+	free(buffer);
+}*/
+
+{
+	char* buffer;
+	uint8_t memory[]= {0x22,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRUGT $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_UnsignLowerOrEqual_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x23,0x2a};
+	TEST_ASSERT_EQUAL_STRING("JRULE $2a",buffer = disassembler(memory));
+	free(buffer);
+}
+
+/*void test_UnsignLowerThan_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x25,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRULT $22",buffer = disassembler(memory));
+	free(buffer);
+}*/
+
+void test_Overflow_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x29,0x22};
+	TEST_ASSERT_EQUAL_STRING("JRV $22",buffer = disassembler(memory));
+	free(buffer);
+}
+
+void test_try_(void)
+{
+	char* buffer;
+	uint8_t memory[]= {0x29,0x22,0x2F,0x33};
+	uint8_t *code = memory;
+	TEST_ASSERT_EQUAL_STRING("JRV $22",buffer = disassembleNBytes(&code,2));
 	free(buffer);
 }

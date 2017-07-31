@@ -79,6 +79,8 @@ char* INClongptr(uint8_t *code);
 char* INCshortptrX(uint8_t *code);
 char* INClongptrX(uint8_t *code);
 char* INCshortptrY(uint8_t *code);
+char* INCWord_X(uint8_t *code);
+char* INCWord_Y(uint8_t *code);
 
 		//ADDW
 char* ADDWword(uint8_t *code);
@@ -218,6 +220,51 @@ char* DECshortptrY(uint8_t *code);
 char* DECWX(uint8_t *code);
 char* DECWY(uint8_t *code);
 
+          //JP
+char* JPlongmem(uint8_t *code);
+char* JPX(uint8_t *code);
+char* JPshortoffX(uint8_t *code);
+char* JPlongoffX(uint8_t *code);
+char* JPY(uint8_t *code);
+char* JPshortoffY(uint8_t *code);
+char* JPlongoffY(uint8_t *code);
+char* JPshortptr(uint8_t *code);
+char* JPlongptr(uint8_t *code);
+char* JPshortptrX(uint8_t *code);
+char* JPlongptrX(uint8_t *code);
+char* JPshortptrY(uint8_t *code);
+char* JPFextmem(uint8_t *code);
+char* JPFlongptr(uint8_t *code);
+char* JumpRelativeAlways(uint8_t *code);
+
+        //JUMP CONDITION
+char* Carry(uint8_t *code);
+char* Equal(uint8_t *code);
+char* False(uint8_t *code);
+char* HalfCarry(uint8_t *code);
+char* InterruptHigh(uint8_t *code);
+char* InterurptLow(uint8_t *code);
+char* InterruptMask(uint8_t *code);
+char* Minus(uint8_t *code);
+char* NotCarry(uint8_t *code);
+char* NotEqual(uint8_t *code);
+char* NotHalfCarry(uint8_t *code);
+char* NotInterruptMask(uint8_t *code);
+char* NotOverflow(uint8_t *code);
+char* Plus(uint8_t *code);
+char* SignGreaterOrEqual(uint8_t *code);
+char* SignGreaterThan(uint8_t *code);
+char* SignLowerOrEqual(uint8_t *code);
+char* SignLowerThan(uint8_t *code);
+char* True(uint8_t *code);
+char* UnsignGreaterOrEqual(uint8_t *code);
+char* UnsignGreaterThan(uint8_t *code);
+char* UsignLowerOrEqual(uint8_t *code);
+char* UnsignLowerThan(uint8_t *code);
+char* Overflow(uint8_t *code);
+
+
+
 char* BREAK(uint8_t *code);
 char* BitComplement(uint8_t *code);
 char* BCCM(uint8_t *code);
@@ -225,15 +272,20 @@ char* BitReset(uint8_t *code);
 char* Bitset(uint8_t *code);
 char* BitTestJumpFalse(uint8_t *code);
 char* BitTestJumpTrue(uint8_t *code);
+char* DivideUnsignedX(uint8_t *code);
+char* DivideUnsignedY(uint8_t *code);
+char* DivideSigned(uint8_t *code);
+char* EXG_X(uint8_t *code);
+char* EXG_Y(uint8_t *code);
+char* EXG_longmem(uint8_t *code);
+char* EXGW(uint8_t *code);
+char* HALT(uint8_t *code);
+char* Interrupt(uint8_t *code);
+char* InterruptReturn(uint8_t *code);
 
-
-
-
-
-char* disassembler(uint8_t *code);
-char* error(uint8_t *code);
+char* disassembler(uint8_t **ptrptrcode);
 char* printError(uint8_t *code);
-
+char* disassembleNBytes(uint8_t **ptrptrcode, int nBytes);
 
 extern Opcode opcodeTable[];
 extern Opcode opcodeTable72[];

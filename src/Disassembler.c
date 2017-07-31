@@ -13,6 +13,7 @@ char memory[20*KB];
 
 //char* _disassembler(uint8_t *code);		// used internally
 
+
 Opcode opcodeTable72[256] = {
   [0xC9] = {ADClongptr,4,4},
   [0xD9] = {ADClongptrX,4,4},
@@ -81,7 +82,8 @@ Opcode opcodeTable72[256] = {
   [0x4A] = {DEClongoffX,4,1},
   [0x3A] = {DEClongptr,4,4},
   [0x6A] = {DEClongptrX,4,4},
-
+  [0xCC] = {JPlongptr,4,5},
+  [0xDC] = {JPlongptrX,4,5}
 
 
 };
@@ -98,6 +100,7 @@ Opcode opcodeTable90[256] = {
   [0x7C] = {INCY,2,1},
   [0x6C] = {INCshortoffY,3,1},
   [0x4C] = {INClongoffY,4,1},
+  [0x5C] = {INCWord_Y,2,1},
   [0xF5] = {BCPY,2,1},
   [0xE5] = {BCPshortoffY,3,1},
   [0xD5] = {BCPlongoffY,4,1},
@@ -140,7 +143,17 @@ Opcode opcodeTable90[256] = {
   [0x7A] = {DECY,2,1},
   [0x6A] = {DECshortoffY,3,1},
   [0x4A] = {DEClongoffY,4,1},
-  [0x5A] = {DECWY,2,2}
+  [0x5A] = {DECWY,2,2},
+  [0x62] = {DivideUnsignedY,2,2},
+  [0xFC] = {JPY,2,1},
+  [0xEC] = {JPshortoffY,3,2},
+  [0xDC] = {JPlongoffY,4,2},
+  [0x29] = {HalfCarry,3,1/2},
+  [0x2F] = {InterruptHigh,3,1/2},
+  [0x2E] = {InterurptLow,3,1/2},
+  [0x2D] = {InterruptMask,3,1/2},
+  [0x28] = {NotHalfCarry,3,1/2},
+  [0x2C] = {NotInterruptMask,3,1/2}
 
 };
 
@@ -157,6 +170,7 @@ Opcode opcodeTable91[256] = {
   [0xC3] = {CPWshortptr_Y,3,5},
   [0x63] = {CPLshortptrY,3,4},
   [0x6A] = {DECshortptrY,3,4},
+  [0xDC] = {JPshortptrY,3,5}
 };
 
 Opcode opcodeTable92[256] = {
@@ -183,6 +197,9 @@ Opcode opcodeTable92[256] = {
   [0x63] = {CPLshortptrX,3,4},
   [0x3A] = {DECshortptr,3,4},
   [0x6A] = {DECshortptrX,3,4},
+  [0xCC] = {JPshortptr,3,5},
+  [0xDC] = {JPshortptrX,3,5},
+  [0xAC] = {JPFlongptr,4,6}
 };
 
 Opcode opcodeTable[256] = {
@@ -212,6 +229,7 @@ Opcode opcodeTable[256] = {
   [0x7C] = {INCX,1,1},
   [0x6C] = {INCshortoffX,2,1},
   [0x0C] = {INCshortoffSP,2,1},
+  [0x5C] = {INCWord_X,1,1},
   [0x1C] = {ADDWword,3,2},
   [0x5B] = {ADDWSP,2,2},
   [0xA5] = {BCPbyte,2 ,1},
@@ -260,20 +278,67 @@ Opcode opcodeTable[256] = {
   [0x7A] = {DECX,1,1},
   [0x6A] = {DECshortoffX,2,1},
   [0x0A] = {DECshortoffSP,2,1},
-  [0x5A] = {DECWX,1,2}
+  [0x5A] = {DECWX,1,2},
+  [0x62] = {DivideUnsignedX,1,2},
+  [0x65] = {DivideSigned,1,2},
+  [0x41] = {EXG_X,1,1},
+  [0x61] = {EXG_Y,1,1},
+  [0x31] = {EXG_longmem,3,3},
+  [0x51] = {EXGW,1,1},
+  [0x8E] = {HALT,1,10},
+  [0x82] = {Interrupt,4,2},
+  [0x80] = {InterruptReturn,1,11},
+  [0xCC] = {JPlongmem,3,1},
+  [0xFC] = {JPX,1,1},
+  [0xEC] = {JPshortoffX,2,1},
+  [0xDC] = {JPlongoffX,3,1},
+  [0xAC] = {JPFextmem,4,2},
+  [0x20] = {JumpRelativeAlways,2,2},
+  [0x25] = {Carry,2,1/2},
+  [0x27] = {Equal,2,1/2},
+  [0x21] = {False,2,1/2},
+  [0x2B] = {Minus,2,1/2},
+  [0x24] = {NotCarry,2,1/2},
+  [0x26] = {NotEqual,2,1/2},
+  [0x28] = {NotOverflow,2,1/2},
+  [0x2A] = {Plus,2,1/2},
+  [0x2E] = {SignGreaterOrEqual,2,1/2},
+  [0x2C] = {SignGreaterThan,2,1/2},
+  [0x2D] = {SignLowerOrEqual,2,1/2},
+  [0x2F] = {SignLowerThan,2,1/2},
+//  [0x20] = {True,2,1/2},
+//  [0x24] = {UnsignGreaterOrEqual, 2,1/2},
+  [0x22] = {UnsignGreaterThan,2,1/2},
+  [0x23] = {UsignLowerOrEqual,2,1/2},
+  [0x29] = {Overflow,2,1/2}
 
 
 };
 
-char* disassembler(uint8_t *code){
+char* disassembleNBytes(uint8_t **ptrptrcode, int nBytes)
+{
+  uint8_t startCodePtr = code[0];
+  char *str;
+  int i;
+   for( i = 0 ; i < nBytes ; i++)
+   {
+    str = disassembler(ptrptrcode);
+    *ptrptrcode += opcodeTable[code[0]].length;
+   }
+   return str;
+}
+
+char* disassembler(uint8_t **ptrptrcode){
             //check the first byte so that can
               //determine to use which table
+      uint8_t *code = *ptrptrcode;
 	if(code[0] == 0x72){
 		if(opcodeTable72[code[1]].execute == NULL){
       Throw(createException("invalid instruction",*code));
 	}
 		else{
 		return opcodeTable72[code[1]].execute(code);
+    *ptrptrcode += opcodeTable72[code[1]].length;
 	}
 	}
 	else if(code[0] == 0x90){
@@ -282,6 +347,7 @@ char* disassembler(uint8_t *code){
 	}
 		else{
 	    return opcodeTable90[code[1]].execute(code);
+      *ptrptrcode += opcodeTable90[code[1]].length;
 	}
 	}
 	else if(code[0] == 0x91){
@@ -290,6 +356,7 @@ char* disassembler(uint8_t *code){
 	}
 		else{
 		return opcodeTable91[code[1]].execute(code);
+    *ptrptrcode += opcodeTable91[code[1]].length;
 	}
 	}
 	else if(code[0] == 0x92){
@@ -298,14 +365,17 @@ char* disassembler(uint8_t *code){
 	}
 		else{
 		return opcodeTable92[code[1]].execute(code);
+    *ptrptrcode += opcodeTable92[code[1]].length;
 	}
 	}
 	else {
 		if(opcodeTable[code[0]].execute == NULL){
-	Throw(createException("invalid instruction",*code));
+Throw(createException("invalid instruction",*code));
+//  printf(*code);
 	}
 		else{
 	return opcodeTable[code[0]].execute(code);
+  *ptrptrcode += opcodeTable[code[1]].length;
 	}
   }
 }
@@ -809,6 +879,21 @@ char* INCshortptrY(uint8_t *code){
   return buffer;
 }
 
+char* INCWord_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"INCW X");
+  printf("INCW X");
+  return buffer;
+}
+
+char* INCWord_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"INCW Y");
+  printf("INCW Y");
+  return buffer;
+}
 				/*ADDW*/
 char* ADDWword(uint8_t *code){
 
@@ -1854,5 +1939,400 @@ char* DECWY(uint8_t *code){
   buffer = malloc(1024);
   sprintf(buffer,"DECW Y");
   printf("DECW Y");
+  return buffer;
+}
+
+char* DivideUnsignedX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DIV X,A");
+  printf("DIV X,A");
+  return buffer;
+}
+
+char* DivideUnsignedY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DIV Y,A");
+  printf("DIV Y,A");
+  return buffer;
+}
+
+char* DivideSigned(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"DIV X,Y");
+  printf("DIV X,Y");
+  return buffer;
+}
+
+char* EXG_X(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"EXG A,XL");
+  printf("EXG A,XL");
+  return buffer;
+}
+
+char* EXG_Y(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"EXG A,YL");
+  printf("EXG A,YL");
+  return buffer;
+}
+
+char* EXG_longmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"EXG A,$%x%x",code[1],code[2]);
+  printf("EXG A,$%x%x",code[1],code[2]);
+  return buffer;
+}
+
+char* EXGW(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"EXGW X,Y");
+  printf("EXGW X,Y");
+  return buffer;
+}
+
+char* HALT(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"HALT");
+  printf("HALT");
+  return buffer;
+}
+
+char* Interrupt(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"INT $%x%x%x",code[1],code[2],code[3]);
+  printf("INT $%x%x%x",code[1],code[2],code[3]);
+  return buffer;
+}
+
+char* InterruptReturn(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"IRET");
+  printf("IRET");
+  return buffer;
+}
+
+          //JUMP
+char* JPlongmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP$%x%x",code[1],code[2]);
+  printf("JP$%x%x",code[2],code[3]);
+  return buffer;
+}
+
+char* JPX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP(X)");
+  printf("JP(X)");
+  return buffer;
+}
+
+char* JPshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP($%x,X)", code[1]);
+  printf("JP($%x,X)",code[1]);
+  return buffer;
+}
+
+char* JPlongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP($%x%x,X)", code[1],code[2]);
+  printf("JP($%x%x,X)",code[1],code[2]);
+  return buffer;
+}
+
+char* JPY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP(Y)");
+  printf("JP(Y)");
+  return buffer;
+}
+
+char* JPshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP($%x,Y)",code[2]);
+  printf("JP($%x,Y)",code[2]);
+  return buffer;
+}
+
+char* JPlongoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP($%x%x,Y)", code[2],code[3]);
+  printf("JP($%x%x,Y)", code[2],code[3]);
+  return buffer;
+}
+
+char* JPshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP[$%x.w]", code[2]);
+  printf("JP[$%x.w]",code[2]);
+  return buffer;
+}
+
+char* JPlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP[$%x%x.w]", code[2],code[3]);
+  printf("JP[$%x%x.w]",code[2],code[3]);
+  return buffer;
+}
+
+char* JPshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP[$%x.w],X",code[2]);
+  printf("JP[$%x.w],X",code[2]);
+  return buffer;
+}
+
+char* JPlongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP[$%x%x.w],X",code[2],code[3]);
+  printf("JP[$%x%x.w],X",code[2],code[3]);
+  return buffer;
+}
+
+char* JPshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JP[$%x.w],Y",code[2]);
+  printf("JP[$%x.w],Y",code[2]);
+  return buffer;
+}
+
+char* JPFextmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JPF $%x%x%x",code[1],code[2],code[3]);
+  printf("JPF $%x%x%x",code[1],code[2],code[3]);
+  return buffer;
+}
+
+char* JPFlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JPF [$%x%x.e]",code[2],code[3]);
+  printf("JPF [$%x%x.e]",code[2],code[3]);
+  return buffer;
+}
+
+char* JumpRelativeAlways(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRA $%x",code[1]);
+  printf("JRA $%x",code[1]);
+  return buffer;
+}
+
+      //CONDITION JUMP
+char* Carry(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRC $%x",code[1]);
+  printf("JRC $%x",code[1]);
+  return buffer;
+}
+
+char* Equal(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JREQ $%x",code[1]);
+  printf("JREQ $%x",code[1]);
+  return buffer;
+}
+
+char* False(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRF $%x",code[1]);
+  printf("JRF $%x",code[1]);
+  return buffer;
+}
+
+char* HalfCarry(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRH $%x",code[2]);
+  printf("JRH $%x",code[1]);
+  return buffer;
+}
+
+char* InterruptHigh(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRIH $%x",code[2]);
+  printf("JRIH $%x",code[1]);
+  return buffer;
+}
+
+char* InterurptLow(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRIL $%x",code[2]);
+  printf("JRIL $%x",code[1]);
+  return buffer;
+}
+
+char* InterruptMask(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRM $%x",code[2]);
+  printf("JRM $%x",code[1]);
+  return buffer;
+}
+
+char* Minus(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRMI $%x",code[1]);
+  printf("JRMI $%x",code[1]);
+  return buffer;
+}
+
+char* NotCarry(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRNC $%x",code[1]);
+  printf("JRNC $%x",code[1]);
+  return buffer;
+}
+
+char* NotEqual(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRNE $%x",code[1]);
+  printf("JRNE $%x",code[1]);
+  return buffer;
+}
+
+char* NotHalfCarry(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRNH $%x",code[2]);
+  printf("JRNH $%x",code[2]);
+  return buffer;
+}
+
+char* NotInterruptMask(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRNM $%x",code[2]);
+  printf("JRNM $%x",code[2]);
+  return buffer;
+}
+
+char* NotOverflow(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRNV $%x",code[1]);
+  printf("JRNV $%x",code[1]);
+  return buffer;
+}
+
+char* Plus(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRPL $%x",code[1]);
+  printf("JRPL $%x",code[1]);
+  return buffer;
+}
+
+char* SignGreaterOrEqual(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRSGE $%x",code[1]);
+  printf("JRSGE $%x",code[1]);
+  return buffer;
+}
+
+char* SignGreaterThan(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRSGT $%x",code[1]);
+  printf("JRSGT $%x",code[1]);
+  return buffer;
+}
+
+char* SignLowerOrEqual(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRSLE $%x",code[1]);
+  printf("JRSLE $%x",code[1]);
+  return buffer;
+}
+
+char* SignLowerThan(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRSLT $%x",code[1]);
+  printf("JRSLT $%x",code[1]);
+  return buffer;
+}
+
+char* True(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRT $%x",code[1]);
+  printf("JRT $%x",code[1]);
+  return buffer;
+}
+
+char* UnsignGreaterOrEqual(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRUGE $%x",code[1]);
+  printf("JRUGE $%x",code[1]);
+  return buffer;
+}
+
+char* UnsignGreaterThan(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRUGT $%x",code[1]);
+  printf("JRUGT $%x",code[1]);
+  return buffer;
+}
+
+
+char* UsignLowerOrEqual(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRULE $%x",code[1]);
+  printf("JRULE $%x",code[1]);
+  return buffer;
+}
+
+char* UnsignLowerThan(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRULT $%x",code[1]);
+  printf("JRULT $%x",code[1]);
+  return buffer;
+}
+
+char* Overflow(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRV $%x",code[1]);
+  printf("JRV $%x",code[1]);
   return buffer;
 }

@@ -10,7 +10,11 @@ Exception *createException(char *msg, int errorCode) {
 }
 
 void freeException(Exception *e) {
-  free(e);
+  if(e) {
+    if(e->msg)
+      free(e->msg);
+    free(e);
+  }
 }
 
 void dumpException(Exception *e) {
