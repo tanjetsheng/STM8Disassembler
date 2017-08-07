@@ -22,13 +22,11 @@ void test_ADCY_(void)
   CEXCEPTION_T ex;
 	char* buffer;
 	uint8_t memory[]= {0x90,0xF9};
-  Try{
-	TEST_ASSERT_EQUAL_STRING("ADC  A,(Y)",buffer = disassembler(memory));
+	uint8_t *code = memory;
+	TEST_ASSERT_EQUAL_STRING("ADC  A,(Y)",buffer = disassembler(&code));
 	free(buffer);	
-  }Catch(ex){
-    dumpException(ex);
- }
+  }
 	
-}
+
 
 //}

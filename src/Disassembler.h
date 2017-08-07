@@ -11,7 +11,7 @@ struct Opcode{
   int cycle;
 };
 char* buffer;
-
+char *str;
         //ADC
 char* ADCbyte(uint8_t *code);
 char* ADCshortmem(uint8_t *code);
@@ -285,7 +285,7 @@ char* InterruptReturn(uint8_t *code);
 
 char* disassembler(uint8_t **ptrptrcode);
 char* printError(uint8_t *code);
-char* disassembleNBytes(uint8_t **ptrptrcode, int nBytes);
+char* disassembleNCodes(uint8_t **ptrptrcode, int numCode);
 
 extern Opcode opcodeTable[];
 extern Opcode opcodeTable72[];

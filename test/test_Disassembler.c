@@ -11,7 +11,7 @@ void setUp(void)
 void tearDown(void)
 {}
           /*ADC*/
-
+/*
 void test_ADCbyte_(void)
 {
 	char* buffer;
@@ -1918,7 +1918,7 @@ void test_True_(void)
 	free(buffer);
 }*/
 
-{
+/*{
 	char* buffer;
 	uint8_t memory[]= {0x22,0x22};
 	TEST_ASSERT_EQUAL_STRING("JRUGT $22",buffer = disassembler(memory));
@@ -1945,15 +1945,49 @@ void test_Overflow_(void)
 {
 	char* buffer;
 	uint8_t memory[]= {0x29,0x22};
-	TEST_ASSERT_EQUAL_STRING("JRV $22",buffer = disassembler(memory));
+	uint8_t *code = memory;
+	TEST_ASSERT_EQUAL_STRING("JRV $22",buffer = disassembler(&code));
+	CEXCEPTION_T ex = NULL;
+  char *str = "movwf  0x3 ###########";
+
+  OperatorToken token = {
+    .type = TOKEN_OPERATOR_TYPE,
+    .startColumn = 11,
+    .length = 11,
+    .originalStr = str,
+    .str = "###########",
+  };
+
+  Try {
+    throwException(ERR_INVALID_OPERAND, (void *)&token,                     \
+                   "Invalid operand, expecting a ',', but received '%s'\n", \
+                    token.str);
+  } Catch(ex) {
+//    dumpException(ex);
+    dumpErrorMessage(ex, 3);
+  }
+  freeException(ex);
 	free(buffer);
 }
 
 void test_try_(void)
 {
-	char* buffer;
-	uint8_t memory[]= {0x29,0x22,0x2F,0x33};
+	uint8_t memory[]= {0x92,0xAC,0x22,0x29,0x29,0x33,0x2F,0x55};
 	uint8_t *code = memory;
-	TEST_ASSERT_EQUAL_STRING("JRV $22",buffer = disassembleNBytes(&code,2));
-	free(buffer);
+	TEST_ASSERT_EQUAL_STRING("JPF [$2229.e]JRULE $33",disassembleNCodes(&code,3));
+}
+
+void dumpErrorMessage(CEXCEPTION_T ex, int lineNo) {
+  Token *token = (Token *)ex->data;
+  int i = token->length - 1;
+  if(i < 0) i = 0;
+
+  printf("Error %d:\n", lineNo);
+  printf("%s\n", ex->msg);
+  printf("%s\n", token->originalStr);
+  printf("%*s", token->startColumn + 1, "^");
+  while(i--)
+    printf("~");
+  putchar('\n');
+
 }
