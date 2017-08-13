@@ -4,6 +4,14 @@
 #include "exception.h"
 #include "CException.h"
 #include "CExceptionConfig.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <stdarg.h>
+#include <string.h>
+#include "error.h"
+#include "Token.h"
+#include <ctype.h>
 
 void setUp(void)
 {}
@@ -1941,43 +1949,7 @@ void test_UnsignLowerOrEqual_(void)
 	free(buffer);
 }*/
 
-void test_Overflow_(void)
-{
-	char* buffer;
-	uint8_t memory[]= {0x29,0x22};
-	uint8_t *code = memory;
-	TEST_ASSERT_EQUAL_STRING("JRV $22",buffer = disassembler(&code));
-	CEXCEPTION_T ex = NULL;
-  char *str = "movwf  0x3 ###########";
-
-  OperatorToken token = {
-    .type = TOKEN_OPERATOR_TYPE,
-    .startColumn = 11,
-    .length = 11,
-    .originalStr = str,
-    .str = "###########",
-  };
-
-  Try {
-    throwException(ERR_INVALID_OPERAND, (void *)&token,                     \
-                   "Invalid operand, expecting a ',', but received '%s'\n", \
-                    token.str);
-  } Catch(ex) {
-//    dumpException(ex);
-    dumpErrorMessage(ex, 3);
-  }
-  freeException(ex);
-	free(buffer);
-}
-
-void test_try_(void)
-{
-	uint8_t memory[]= {0x92,0xAC,0x22,0x29,0x29,0x33,0x2F,0x55};
-	uint8_t *code = memory;
-	TEST_ASSERT_EQUAL_STRING("JPF [$2229.e]JRULE $33",disassembleNCodes(&code,3));
-}
-
-void dumpErrorMessage(CEXCEPTION_T ex, int lineNo) {
+  void dumpErrorMessage(CEXCEPTION_T ex, int lineNo) {
   Token *token = (Token *)ex->data;
   int i = token->length - 1;
   if(i < 0) i = 0;
@@ -1991,3 +1963,41 @@ void dumpErrorMessage(CEXCEPTION_T ex, int lineNo) {
   putchar('\n');
 
 }
+  void test_error_expect_wrong(void)
+{
+  CEXCEPTION_T ex = NULL;
+  uint8_t memory[]={0x93,0xAC,0x22,0x29,0x21,0x33,0x2F,0x55};
+  char* show= "0x92,0xAC,0x22,0x29,0x21,0x33,0x2F,0x55";
+  uint8_t *code = memory;
+  char* result = disassembleNCodes(&code,3);                      
+  OperatorToken token = {
+   .type = TOKEN_OPERATOR_TYPE,
+   .startColumn = 16,
+   .length = 3,
+   .originalStr = show,
+   .str = "0x99",
+ };
+
+  Try {
+    throwException(ERR_INVALID_OPERAND,(void *)&token,                     \
+                   "invalid instruction 0x%s,", 			\
+                    token.str);
+  } Catch(ex) {
+    dumpErrorMessage(ex, 1);
+  }
+  freeException(ex);
+    printf("OUTPUT:\n%s",result);
+	free(result);
+}
+
+
+void test_try_(void)
+{
+	uint8_t memory[]= {0x92,0xAC,0x22,0x29,0x21,0x33,0x2F,0x55};
+	uint8_t *code = memory;
+	TEST_ASSERT_EQUAL_STRING("JPF [$2229.e]JRULE $33",disassembleNCodes(&code,3));
+}
+
+
+
+

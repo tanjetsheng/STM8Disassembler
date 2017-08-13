@@ -49,6 +49,7 @@
   :test_preprocess:
     - *common_defines
     - TEST
+    - _ISOC99_SOURCE
 
 :cmock:
   :mock_prefix: mock_

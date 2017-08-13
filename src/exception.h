@@ -11,7 +11,7 @@ typedef struct Exception* ExceptionPtr;
 struct Exception {
   char *msg;
   int  errorCode;
-  void data;
+  void *data;
 };
 
 Exception *createException(char *msg, int errorCode);

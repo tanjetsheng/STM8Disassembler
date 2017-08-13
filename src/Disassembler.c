@@ -5,6 +5,8 @@
 #include "CException.h"
 #include "exception.h"
 #include <string.h>
+#include <stdarg.h>
+#include <ctype.h>
 
 
 #define KB 1024
@@ -315,45 +317,31 @@ Opcode opcodeTable[256] = {
 
 
 };
-//determine lenght and let my pointer to pointer know
+//disassemble multiple 
 char* disassembleNCodes(uint8_t **ptrptrcode, int numCode)
 {
+  char *str;
   int i;
-  char* **stringptr;
+  char* buff = malloc(1028);
+  str = malloc(1028);
   for( i = 0 ; i < numCode ; i++)
   {
-    if(code[0] == 0x72){
-      str = disassembler(ptrptrcode);
-      *ptrptrcode += opcodeTable72[code[1]].length;
-        }
-    else if(code[0] == 0x90){
-      str = disassembler(ptrptrcode);
-      *ptrptrcode += opcodeTable90[code[1]].length;
-        }
-    else if(code[0] == 0x91){
-      str = disassembler(ptrptrcode);
-      *ptrptrcode += opcodeTable91[code[1]].length;
-        }
-    else if(code[0] == 0x92){
-      str = disassembler(ptrptrcode);
-      *ptrptrcode += opcodeTable92[code[1]].length;
-        }
-    else{
-      str = disassembler(ptrptrcode);
-      *ptrptrcode += opcodeTable[code[0]].length;
-        }
+    str = disassembler(ptrptrcode);
+	//strcpy(buff,str);
 
    }
 
-
-   return buffer;
+   return str;
 }
 
 char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that can
     uint8_t *code = *ptrptrcode;              //determine to use which table
     if(code[0] == 0x72){
       if(opcodeTable72[code[1]].execute == NULL){
-        Throw(createException("invalid instruction",*code));
+		char* buffer = malloc(1028);
+		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
+        sprintf(buffer,"invalid instruction 0x%x",*code);
+		return buffer;
         }
         else{
         *ptrptrcode += opcodeTable72[code[1]].length;
@@ -362,7 +350,10 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
     }
     else if(code[0] == 0x90){
       if(opcodeTable90[code[1]].execute == NULL){
-        Throw(createException("invalid instruction",*code));
+		char* buffer = malloc(1028);
+		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
+        sprintf(buffer,"invalid instruction 0x%x",*code);
+		return buffer;
         }
       else{
         *ptrptrcode += opcodeTable90[code[1]].length;
@@ -371,7 +362,10 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
       }
     else if(code[0] == 0x91){
       if(opcodeTable91[code[1]].execute == NULL){
-        Throw(createException("invalid instruction",*code));
+		char* buffer = malloc(1028);
+		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
+        sprintf(buffer,"invalid instruction 0x%x",*code);
+		return buffer;
         }
       else{
         *ptrptrcode += opcodeTable91[code[1]].length;
@@ -380,7 +374,10 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
       }
     else if(code[0] == 0x92){
       if(opcodeTable92[code[1]].execute == NULL){
-        Throw(createException("invalid instruction",*code));
+		char* buffer = malloc(1028);
+		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
+        sprintf(buffer,"invalid instruction 0x%x",*code);
+		return buffer;
         }
       else{
         *ptrptrcode += opcodeTable92[code[1]].length;
@@ -389,8 +386,10 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
     }
     else {
       if(opcodeTable[code[0]].execute == NULL){       //Throw(createException("invalid instruction",*code));
-        printf("Error!invalid opcode,cant found in opcode table\n");
-        sprintf(buffer,"Error!invalid opcode,cant found in opcode table");
+		char* buffer = malloc(1028);
+        printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);
+        sprintf(buffer,"invalid instruction 0x%x",*code);
+		return buffer;
         }
       else{
         *ptrptrcode += opcodeTable[code[1]].length;
