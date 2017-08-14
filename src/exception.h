@@ -16,7 +16,7 @@ struct Exception {
 
 Exception *createException(char *msg, int errorCode);
 void freeException(Exception *e);
-void dumpException(Exception *e);
+void dumpErrorMessage(Exception *e);
 
 void throwException(int errorCode, void *data, char *message, ...);
 

@@ -7,6 +7,9 @@
 #include <string.h>
 #include <stdarg.h>
 #include <ctype.h>
+#include "error.h"
+#include "Token.h"
+#include <ctype.h>
 
 
 #define KB 1024
@@ -309,51 +312,52 @@ Opcode opcodeTable[256] = {
   [0x2C] = {SignGreaterThan,2,1/2},
   [0x2D] = {SignLowerOrEqual,2,1/2},
   [0x2F] = {SignLowerThan,2,1/2},
-//  [0x20] = {True,2,1/2},
-//  [0x24] = {UnsignGreaterOrEqual, 2,1/2},
   [0x22] = {UnsignGreaterThan,2,1/2},
   [0x23] = {UsignLowerOrEqual,2,1/2},
-  [0x29] = {Overflow,2,1/2}
+  [0x29] = {Overflow,2,1/2},
+  [0x25] = {carry,2,1}
 
 
 };
-//disassemble multiple 
+
+//disassemble multiple function
 char* disassembleNCodes(uint8_t **ptrptrcode, int numCode)
 {
   char *str;
   int i;
   char* buff = malloc(1028);
   str = malloc(1028);
-  for( i = 0 ; i < numCode ; i++)
+  for( i = 0 ; i < numCode ; i++)           //used for loop to loop how many code did it have
   {
     str = disassembler(ptrptrcode);
-	//strcpy(buff,str);
-
+    if(i==0)
+      strcpy(buff,str);
+                         //copy the value into buff so that it can combine all the value
+    else                                  //that every time the loop output
+      strcat(buff,str);
    }
-
-   return str;
+   return buff;
 }
 
 char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that can
     uint8_t *code = *ptrptrcode;              //determine to use which table
     if(code[0] == 0x72){
-      if(opcodeTable72[code[1]].execute == NULL){
-		char* buffer = malloc(1028);
-		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
-        sprintf(buffer,"invalid instruction 0x%x",*code);
-		return buffer;
-        }
-        else{
-        *ptrptrcode += opcodeTable72[code[1]].length;
-        return opcodeTable72[code[1]].execute(code);
-        }
+      if(opcodeTable72[code[1]].execute == NULL){               //when cant find the code in opcode table,it throw
+                                                                //the code and invalid instruction
+        throwException(ERR_INVALID_OPERAND,(void *)code,    \
+                      "invalid instruction 0x%x,", 			\
+                       code[1]);
+      }
+      else{
+          *ptrptrcode += opcodeTable72[code[1]].length;           //it determine the length of the code so the pointer
+          return opcodeTable72[code[1]].execute(code);            //can know need to move how many pointer
+      }
     }
     else if(code[0] == 0x90){
       if(opcodeTable90[code[1]].execute == NULL){
-		char* buffer = malloc(1028);
-		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
-        sprintf(buffer,"invalid instruction 0x%x",*code);
-		return buffer;
+        throwException(ERR_INVALID_OPERAND,(void *)code,    \
+                     " invalid instruction 0x%x,", 			\
+                       code[1]);
         }
       else{
         *ptrptrcode += opcodeTable90[code[1]].length;
@@ -362,51 +366,40 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
       }
     else if(code[0] == 0x91){
       if(opcodeTable91[code[1]].execute == NULL){
-		char* buffer = malloc(1028);
-		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
-        sprintf(buffer,"invalid instruction 0x%x",*code);
-		return buffer;
+        throwException(ERR_INVALID_OPERAND,(void *)code,   \
+                      "invalid instruction 0x%x,", 			\
+                       code[1]);
         }
       else{
         *ptrptrcode += opcodeTable91[code[1]].length;
         return opcodeTable91[code[1]].execute(code);
-        }
       }
+    }
     else if(code[0] == 0x92){
       if(opcodeTable92[code[1]].execute == NULL){
-		char* buffer = malloc(1028);
-		printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);  
-        sprintf(buffer,"invalid instruction 0x%x",*code);
-		return buffer;
+        throwException(ERR_INVALID_OPERAND,(void *)code,    \
+                      "invalid instruction 0x%x,", 			\
+                       code[1]);
         }
       else{
         *ptrptrcode += opcodeTable92[code[1]].length;
         return opcodeTable92[code[1]].execute(code);
-        }
+      }
     }
     else {
-      if(opcodeTable[code[0]].execute == NULL){       //Throw(createException("invalid instruction",*code));
-		char* buffer = malloc(1028);
-        printf("Error!invalid opcode,cant found in opcode table,->0x%x\n",*code);
-        sprintf(buffer,"invalid instruction 0x%x",*code);
-		return buffer;
+      if(opcodeTable[code[0]].execute == NULL){
+        throwException(ERR_INVALID_OPERAND,(void *)code,    \
+                      "invalid instruction 0x%x,", 			\
+                       *code);
         }
       else{
-        *ptrptrcode += opcodeTable[code[1]].length;
+        *ptrptrcode += opcodeTable[code[0]].length;
         return opcodeTable[code[0]].execute(code);
-        }
+      }
     }
 }
 
-char* printError(uint8_t *code){
 
- CEXCEPTION_T ex;
- Try{
-  }
-  Catch(ex){
-    dumpException(ex);
-  }
-}
 
                /*ADC*/
 
@@ -2352,5 +2345,133 @@ char* Overflow(uint8_t *code){
   buffer = malloc(1024);
   sprintf(buffer,"JRV $%x",code[1]);
   printf("JRV $%x\n",code[1]);
+  return buffer;
+}
+
+char* carry(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"JRC $%x",code[1]);
+  printf("JRC $%x\n",code[1]);
+  return buffer;
+}
+
+char* LDbyte(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,#$%x", code[1]);
+  printf("LD  A,#$%x\n",code[1]);
+  return buffer;
+}
+
+char* LDshortmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,$%x", code[1]);
+  printf("LD  A,$%x\n",code[1]);
+  return buffer;
+}
+
+char* LDlongmem(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,$%x%x", code[1],code[2]);
+  printf("LD  A,$%x%x\n",code[1],code[2]);
+  return buffer;
+}
+
+char* LDX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,(X)");
+  printf("LD  A,(X)\n");
+  return buffer;
+}
+
+char* LDshortoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,($%x,X)", code[1]);
+  printf("LD  A,($%x,X)\n",code[1]);
+  return buffer;
+}
+
+char* LDlongoffX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,($%x%x,X)", code[1],code[2]);
+  printf("LD  A,($%x%x,X)\n",code[1],code[2]);
+  return buffer;
+}
+
+char* LDY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,(Y)");
+  printf("LD  A,(Y)\n");
+  return buffer;
+}
+
+char* LDshortoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,($%x,Y)",code[2]);
+  printf("LD  A,($%x,Y)\n",code[2]);
+  return buffer;
+}
+
+char* LDlongoffY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,($%x%x,Y)", code[2],code[3]);
+  printf("LD  A,($%x%x,Y)\n", code[2],code[3]);
+  return buffer;
+}
+
+char* LDshortoffSP(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,($%x,SP)", code[1]);
+  printf("LD  A,($%x,SP)\n", code[1]);
+  return buffer;
+}
+
+char* LDshortptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,[$%x.w]", code[2]);
+  printf("LD  A,[$%x.w]\n",code[2]);
+  return buffer;
+}
+
+char* LDlongptr(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,[$%x%x.w]", code[2],code[3]);
+  printf("LD  A,[$%x%x.w]\n",code[2],code[3]);
+  return buffer;
+}
+
+char* LDshortptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,[$%x.w],X",code[2]);
+  printf("LD  A,[$%x.w],X\n",code[2]);
+  return buffer;
+}
+
+char* LDlongptrX(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,[$%x%x.w],X",code[2],code[3]);
+  printf("LD  A,[$%x%x.w],X\n",code[2],code[3]);
+  return buffer;
+}
+
+char* LDshortptrY(uint8_t *code){
+
+  buffer = malloc(1024);
+  sprintf(buffer,"LD  A,[$%x.w],Y",code[2]);
+  printf("LD  A,[$%x.w],Y\n",code[2]);
   return buffer;
 }

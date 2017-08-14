@@ -261,6 +261,7 @@ char* UnsignGreaterOrEqual(uint8_t *code);
 char* UnsignGreaterThan(uint8_t *code);
 char* UsignLowerOrEqual(uint8_t *code);
 char* UnsignLowerThan(uint8_t *code);
+char* carry(uint8_t *code);
 char* Overflow(uint8_t *code);
 
 
@@ -283,8 +284,24 @@ char* HALT(uint8_t *code);
 char* Interrupt(uint8_t *code);
 char* InterruptReturn(uint8_t *code);
 
+      //load
+char* LDbyte(uint8_t *code);
+char* LDshortmem(uint8_t *code);
+char* LDlongmem(uint8_t *code);
+char* LDX(uint8_t *code);
+char* LDshortoffX(uint8_t *code);
+char* LDlongoffX(uint8_t *code);
+char* LDY(uint8_t *code);
+char* LDshortoffY(uint8_t *code);
+char* LDlongoffY(uint8_t *code);
+char* LDshortoffSP(uint8_t *code);
+char* LDshortptr(uint8_t *code);
+char* LDlongptr(uint8_t *code);
+char* LDshortptrX(uint8_t *code);
+char* LDlongptrX(uint8_t *code);
+char* LDshortptrY(uint8_t *code);
+
 char* disassembler(uint8_t **ptrptrcode);
-char* printError(uint8_t *code);
 char* disassembleNCodes(uint8_t **ptrptrcode, int numCode);
 
 extern Opcode opcodeTable[];
@@ -292,5 +309,4 @@ extern Opcode opcodeTable72[];
 extern Opcode opcodeTable90[];
 extern Opcode opcodeTable91[];
 extern Opcode opcodeTable92[];
-
 #endif // _DISASSEMBLER_H

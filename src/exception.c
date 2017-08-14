@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void throwException(int errorCode, void *data, char *message, ...) {
+void throwException(int errorCode, void *data, char *message,...) {
   va_list args;
   char *buffer;
   int length;
@@ -17,7 +17,7 @@ void throwException(int errorCode, void *data, char *message, ...) {
 
   length = vsnprintf(buffer, 0, message, args);
   buffer = malloc(length + 1);
-  vsnprintf(buffer, length, message, args);
+  vsnprintf(buffer, length + 1, message, args);
 
   e->msg = buffer;
   e->errorCode = errorCode;
@@ -34,7 +34,7 @@ void freeException(Exception *e) {
     free(e);
   }
 }
+void dumpErrorMessage(Exception *e) {
+  printf("%s\n\t",e->msg);
 
-void dumpException(Exception *e) {
-  printf("%s (err=%d)\n", e->msg, e->errorCode);
 }

@@ -24,7 +24,7 @@
 
 :module_generator:
   :naming: bumpy
-  
+
 :extension:
   :executable: .exe
 
@@ -46,10 +46,13 @@
     - *common_defines
     - TEST
     - CEXCEPTION_USE_CONFIG_FILE
+    # The following macro is to ensure vsnprintf() returns the length of
+    # bytes needed to write when it fails due to buffer being too small
+    - _ISOC99_SOURCE
   :test_preprocess:
     - *common_defines
     - TEST
-    - _ISOC99_SOURCE
+
 
 :cmock:
   :mock_prefix: mock_
