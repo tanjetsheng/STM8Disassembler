@@ -336,6 +336,7 @@ char* disassembleNCodes(uint8_t **ptrptrcode, int numCode)
     else                                  //that every time the loop output
       strcat(buff,str);
    }
+   printf("---------------------");
    return buff;
 }
 

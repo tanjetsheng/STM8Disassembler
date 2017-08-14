@@ -72,3 +72,10 @@ void test_3_code_expect_pass_(void)
 	uint8_t *code = memory;
 	TEST_ASSERT_EQUAL_STRING("JPF [$2229.e]JRF $33JRSLT $55",disassembleNCodes(&code,3));
 }
+
+void test_ADDWwordY_DEClongoffX_ANDY_INCshortptr_CPshortptr_ANDX_expect_pass_(void)
+{
+	uint8_t memory[]= {0x72,0xA9,0x53,0xf5,0x72,0x4A,0x34,0x66,0x90,0xF4,0x91,0x6C,0x55,0x92,0xC1,0x33,0xFB};
+	uint8_t *code = memory;
+	TEST_ASSERT_EQUAL_STRING("ADDW Y,#$53f5DEC($3466,X)AND  A,(Y)INC[$55.w],YCP  A,[$33.w]ADD  A,(X)",disassembleNCodes(&code,6));
+}
