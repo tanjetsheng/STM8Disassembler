@@ -12,6 +12,7 @@ struct Opcode{
 };
 char* buffer;
 char *str;
+int i;
         //ADC
 char* ADCbyte(uint8_t *code);
 char* ADCshortmem(uint8_t *code);

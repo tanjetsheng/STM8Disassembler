@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
+
+
 void throwException(int errorCode, void *data, char *message,...) {
   va_list args;
   char *buffer;
@@ -36,5 +40,7 @@ void freeException(Exception *e) {
 }
 void dumpErrorMessage(Exception *e) {
   printf("%s\n\t",e->msg);
+  message = e->msg;
+  errorcode = e->errorCode;
 
 }

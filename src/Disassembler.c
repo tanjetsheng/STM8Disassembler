@@ -324,17 +324,17 @@ Opcode opcodeTable[256] = {
 char* disassembleNCodes(uint8_t **ptrptrcode, int numCode)
 {
   char *str;
-  int i;
   char* buff = malloc(1028);
   str = malloc(1028);
   for( i = 0 ; i < numCode ; i++)           //used for loop to loop how many code did it have
   {
     str = disassembler(ptrptrcode);
-    if(i==0)
+    if(i==0){
       strcpy(buff,str);
-                         //copy the value into buff so that it can combine all the value
+	}	  											//copy the value into buff so that it can combine all the value
     else                                  //that every time the loop output
       strcat(buff,str);
+	  strcat(buff,"\n");
    }
    printf("---------------------");
    return buff;
@@ -357,7 +357,7 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
     else if(code[0] == 0x90){
       if(opcodeTable90[code[1]].execute == NULL){
         throwException(ERR_INVALID_OPERAND,(void *)code,    \
-                     " invalid instruction 0x%x,", 			\
+                     " invalid instruction 0x%x", 			\
                        code[1]);
         }
       else{
@@ -368,7 +368,7 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
     else if(code[0] == 0x91){
       if(opcodeTable91[code[1]].execute == NULL){
         throwException(ERR_INVALID_OPERAND,(void *)code,   \
-                      "invalid instruction 0x%x,", 			\
+                      "invalid instruction 0x%x", 			\
                        code[1]);
         }
       else{
@@ -379,7 +379,7 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
     else if(code[0] == 0x92){
       if(opcodeTable92[code[1]].execute == NULL){
         throwException(ERR_INVALID_OPERAND,(void *)code,    \
-                      "invalid instruction 0x%x,", 			\
+                      "invalid instruction 0x%x", 			\
                        code[1]);
         }
       else{
@@ -390,7 +390,7 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
     else {
       if(opcodeTable[code[0]].execute == NULL){
         throwException(ERR_INVALID_OPERAND,(void *)code,    \
-                      "invalid instruction 0x%x,", 			\
+                      "invalid instruction 0x%x", 			\
                        *code);
         }
       else{

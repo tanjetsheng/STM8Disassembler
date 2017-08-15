@@ -30,8 +30,8 @@ void test_error_in_1st_code_expect_error_code(void)
   }
   Catch(ex) {
     dumpErrorMessage(ex);
-    //TEST_ASSERT_EQUAL(ERR_INVALID_OPERAND,e->msg);
-  //  TEST_ASSERT_EQUAL_STRING("invalid instruction 0x95",e->msg);
+    TEST_ASSERT_EQUAL(ERR_INVALID_OPERAND,errorcode);
+    TEST_ASSERT_EQUAL_STRING("invalid instruction 0x95",message);
   }
 }
 
@@ -63,19 +63,22 @@ void test_2_code_expect_pass_(void)
 {
 	uint8_t memory[]= {0x5F,0x90,0x7C};
 	uint8_t *code = memory;
-	TEST_ASSERT_EQUAL_STRING("CLRW XINC(Y)",disassembleNCodes(&code,2));
+	TEST_ASSERT_EQUAL_STRING("CLRW X\nINC(Y)\n",disassembleNCodes(&code,2));
 }
 
 void test_3_code_expect_pass_(void)
 {
 	uint8_t memory[]= {0x92,0xAC,0x22,0x29,0x21,0x33,0x2F,0x55};
 	uint8_t *code = memory;
-	TEST_ASSERT_EQUAL_STRING("JPF [$2229.e]JRF $33JRSLT $55",disassembleNCodes(&code,3));
+	TEST_ASSERT_EQUAL_STRING("JPF [$2229.e]\nJRF $33\nJRSLT $55\n",disassembleNCodes(&code,3));
+	TEST_ASSERT_EQUAL(3,i);
 }
 
 void test_ADDWwordY_DEClongoffX_ANDY_INCshortptr_CPshortptr_ANDX_expect_pass_(void)
 {
 	uint8_t memory[]= {0x72,0xA9,0x53,0xf5,0x72,0x4A,0x34,0x66,0x90,0xF4,0x91,0x6C,0x55,0x92,0xC1,0x33,0xFB};
 	uint8_t *code = memory;
-	TEST_ASSERT_EQUAL_STRING("ADDW Y,#$53f5DEC($3466,X)AND  A,(Y)INC[$55.w],YCP  A,[$33.w]ADD  A,(X)",disassembleNCodes(&code,6));
+	TEST_ASSERT_EQUAL_STRING("ADDW Y,#$53f5\nDEC($3466,X)\nAND  A,(Y)\nINC[$55.w],Y\nCP  A,[$33.w]\nADD  A,(X)\n",disassembleNCodes(&code,6));
+	TEST_ASSERT_EQUAL(6,i);
 }
+
