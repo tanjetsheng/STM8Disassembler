@@ -21,301 +21,302 @@ char memory[20*KB];
 
 
 Opcode opcodeTable72[256] = {
-  [0xC9] = {ADClongptr,4,4},
-  [0xD9] = {ADClongptrX,4,4},
-  [0xCB] = {ADDlongptr,4,4},
-  [0xDB] = {ADDlongptrX,4,4},
-  [0xC4] = {ANDlongptr,4,4},
-  [0xD4] = {ANDlongptrX,4,4},
-  [0x5C] = {INClongmem,4,1},
-  [0x4C] = {INClongoffX,4,1},
-  [0x3C] = {INClongptr,4,4},
-  [0x6C] = {INClongptrX,4,4},
-  [0xBB] = {ADDWlongmem,4,2},
-  [0xFB] = {ADDWshortoffSP,3,2},
-  [0xA9] = {ADDWwordY,4,2},
-  [0xB9] = {ADDWlongmemY,4,2},
-  [0xF9] = {ADDWshortoffSPY,3,2},
-  [0xC5] = {BCPlongptr,4,4},
-  [0xD5] = {BCPlongptrX,4,4},
-  [0x11] = {BitReset,4,1},
-  [0x13] = {BitReset,4,1},
-  [0x15] = {BitReset,4,1},
-  [0x17] = {BitReset,4,1},
-  [0x19] = {BitReset,4,1},
-  [0x1B] = {BitReset,4,1},
-  [0x1D] = {BitReset,4,1},
-  [0x1F] = {BitReset,4,1},
-  [0x10] = {Bitset,4,1},
-  [0x12] = {Bitset,4,1},
-  [0x14] = {Bitset,4,1},
-  [0x16] = {Bitset,4,1},
-  [0x18] = {Bitset,4,1},
-  [0x1A] = {Bitset,4,1},
-  [0x1C] = {Bitset,4,1},
-  [0x1E] = {Bitset,4,1},
-  [0x01] = {BitTestJumpFalse,5,3/2},
-  [0x03] = {BitTestJumpFalse,5,3/2},
-  [0x05] = {BitTestJumpFalse,5,3/2},
-  [0x07] = {BitTestJumpFalse,5,3/2},
-  [0x09] = {BitTestJumpFalse,5,3/2},
-  [0x0B] = {BitTestJumpFalse,5,3/2},
-  [0x0D] = {BitTestJumpFalse,5,3/2},
-  [0x0F] = {BitTestJumpFalse,5,3/2},
-  [0x00] = {BitTestJumpTrue,4,1},
-  [0x02] = {BitTestJumpTrue,4,1},
-  [0x04] = {BitTestJumpTrue,4,1},
-  [0x06] = {BitTestJumpTrue,4,1},
-  [0x08] = {BitTestJumpTrue,4,1},
-  [0x0A] = {BitTestJumpTrue,4,1},
-  [0x0C] = {BitTestJumpTrue,4,1},
-  [0x0E] = {BitTestJumpTrue,4,1},
-  [0xCD] = {CALLlongptr,4,6},
-  [0xDD] = {CALLlongptrX,4,6},
-  [0x5F] = {CLRlongmem,4,1},
-  [0x4F] = {CLRlongoffX,4,1},
-  [0x3F] = {CLRlongptr,4,4},
-  [0x6F] = {CLRlongptrX,4,4},
-  [0xC1] = {CPlongptr,4,4},
-  [0xD1] = {CPlongptrX,4,4},
-  [0xC3] = {CPWlongptr_X,4,5},
-  [0xD3] = {CPWlongptrX_Y,4,5},
-  [0x53] = {CPLlongmem,4,1},
-  [0x43] = {CPLlongoffX,4,1},
-  [0x33] = {CPLlongptr,4,4},
-  [0x63] = {CPLlongptrX,4,4},
-  [0x5A] = {DEClongmem,4,1},
-  [0x4A] = {DEClongoffX,4,1},
-  [0x3A] = {DEClongptr,4,4},
-  [0x6A] = {DEClongptrX,4,4},
-  [0xCC] = {JPlongptr,4,5},
-  [0xDC] = {JPlongptrX,4,5}
+  [0xC9] = {adcLongptr,4},
+  [0xD9] = {adcLongptrX,4},
+  [0xCB] = {ADDlongptr,4},
+  [0xDB] = {ADDlongptrX,4},
+  [0xC4] = {ANDlongptr,4},
+  [0xD4] = {ANDlongptrX,4},
+  [0x5C] = {INClongmem,4},
+  [0x4C] = {INClongoffX,4},
+  [0x3C] = {INClongptr,4},
+  [0x6C] = {INClongptrX,4},
+  [0xBB] = {ADDWlongmem,4},
+  [0xFB] = {ADDWshortoffSP,3},
+  [0xA9] = {ADDWwordY,4},
+  [0xB9] = {ADDWlongmemY,4},
+  [0xF9] = {ADDWshortoffSPY,3},
+  [0xC5] = {BCPlongptr,4},
+  [0xD5] = {BCPlongptrX,4},
+  [0x11] = {BitReset,4},
+  [0x13] = {BitReset,4},
+  [0x15] = {BitReset,4},
+  [0x17] = {BitReset,4},
+  [0x19] = {BitReset,4},
+  [0x1B] = {BitReset,4},
+  [0x1D] = {BitReset,4},
+  [0x1F] = {BitReset,4},
+  [0x10] = {Bitset,4},
+  [0x12] = {Bitset,4},
+  [0x14] = {Bitset,4},
+  [0x16] = {Bitset,4},
+  [0x18] = {Bitset,4},
+  [0x1A] = {Bitset,4},
+  [0x1C] = {Bitset,4},
+  [0x1E] = {Bitset,4},
+  [0x01] = {BitTestJumpFalse,5},
+  [0x03] = {BitTestJumpFalse,5},
+  [0x05] = {BitTestJumpFalse,5},
+  [0x07] = {BitTestJumpFalse,5},
+  [0x09] = {BitTestJumpFalse,5},
+  [0x0B] = {BitTestJumpFalse,5},
+  [0x0D] = {BitTestJumpFalse,5},
+  [0x0F] = {BitTestJumpFalse,5},
+  [0x00] = {BitTestJumpTrue,4},
+  [0x02] = {BitTestJumpTrue,4},
+  [0x04] = {BitTestJumpTrue,4},
+  [0x06] = {BitTestJumpTrue,4},
+  [0x08] = {BitTestJumpTrue,4},
+  [0x0A] = {BitTestJumpTrue,4},
+  [0x0C] = {BitTestJumpTrue,4},
+  [0x0E] = {BitTestJumpTrue,4},
+  [0xCD] = {CALLlongptr,4},
+  [0xDD] = {CALLlongptrX,4},
+  [0x5F] = {CLRlongmem,4},
+  [0x4F] = {CLRlongoffX,4},
+  [0x3F] = {CLRlongptr,4},
+  [0x6F] = {CLRlongptrX,4},
+  [0xC1] = {CPlongptr,4},
+  [0xD1] = {CPlongptrX,4},
+  [0xC3] = {CPWlongptr_X,4},
+  [0xD3] = {CPWlongptrX_Y,4},
+  [0x53] = {CPLlongmem,4},
+  [0x43] = {CPLlongoffX,4},
+  [0x33] = {CPLlongptr,4},
+  [0x63] = {CPLlongptrX,4},
+  [0x5A] = {DEClongmem,4},
+  [0x4A] = {DEClongoffX,4},
+  [0x3A] = {DEClongptr,4},
+  [0x6A] = {DEClongptrX,4},
+  [0xCC] = {JPlongptr,4},
+  [0xDC] = {JPlongptrX,4},
+  [0xD6] = {LDshortptrY,4}
 
 
 };
 Opcode opcodeTable90[256] = {
-  [0xF9] = {ADCY,2,1},
-  [0xE9] = {ADCshortoffY,3,1},
-  [0xD9] = {ADClongoffY,4,1},
-  [0xFB] = {ADDY,2,1},
-  [0xEB] = {ADDshortoffY,3,1},
-  [0xDB] = {ADDlongoffY,4,1},
-  [0xF4] = {ANDY,2,1},
-  [0xE4] = {ANDshortoffY,3,1},
-  [0xD4] = {ANDlongoffY,4,1},
-  [0x7C] = {INCY,2,1},
-  [0x6C] = {INCshortoffY,3,1},
-  [0x4C] = {INClongoffY,4,1},
-  [0x5C] = {INCWord_Y,2,1},
-  [0xF5] = {BCPY,2,1},
-  [0xE5] = {BCPshortoffY,3,1},
-  [0xD5] = {BCPlongoffY,4,1},
-  [0x10] = {BitComplement,4,1},
-  [0x12] = {BitComplement,4,1},
-  [0x14] = {BitComplement,4,1},
-  [0x16] = {BitComplement,4,1},
-  [0x18] = {BitComplement,4,1},
-  [0x1A] = {BitComplement,4,1},
-  [0x1C] = {BitComplement,4,1},
-  [0x1E] = {BitComplement,4,1},
-  [0x11] = {BCCM,4,1},
-  [0x13] = {BCCM,4,1},
-  [0x15] = {BCCM,4,1},
-  [0x17] = {BCCM,4,1},
-  [0x19] = {BCCM,4,1},
-  [0x1B] = {BCCM,4,1},
-  [0x1D] = {BCCM,4,1},
-  [0x1F] = {BCCM,4,1},
-  [0XFD] = {CALLY,2,4},
-  [0xED] = {CALLshortoffY,3,4},
-  [0XDD] = {CALLlongoffY,4,4},
-  [0x7F] = {CLRY,2,1},
-  [0x6F] = {CLRshortoffY,3,1},
-  [0x4F] = {CLRlongoffY,4,1},
-  [0X5F] = {CLRWY,2,1},
-  [0xF1] = {CPY,2,1},
-  [0xE1] = {CPshortoffY,3,1},
-  [0xD1] = {CPlongoffY,4,1},
-  [0xF3] = {CPWY,2,2},
-  [0xE3] = {CPWshortoffY_X,3,2},
-  [0xD3] = {CPWlongoffY_X,4,2},
-  [0xA3] = {CPwordY,4,2},
-  [0xB3] = {CPWshortmem_Y,3,2},
-  [0xC3] = {CPWlongmem_Y,4,2},
-  [0x73] = {CPLY,2,1},
-  [0x63] = {CPLshortoffY,3,1},
-  [0x43] = {CPLlongoffY,4,1},
-  [0x53] = {CPLWY,2,2},
-  [0x7A] = {DECY,2,1},
-  [0x6A] = {DECshortoffY,3,1},
-  [0x4A] = {DEClongoffY,4,1},
-  [0x5A] = {DECWY,2,2},
-  [0x62] = {DivideUnsignedY,2,2},
-  [0xFC] = {JPY,2,1},
-  [0xEC] = {JPshortoffY,3,2},
-  [0xDC] = {JPlongoffY,4,2},
-  [0x29] = {HalfCarry,3,1/2},
-  [0x2F] = {InterruptHigh,3,1/2},
-  [0x2E] = {InterurptLow,3,1/2},
-  [0x2D] = {InterruptMask,3,1/2},
-  [0x28] = {NotHalfCarry,3,1/2},
-  [0x2C] = {NotInterruptMask,3,1/2}
+  [0xF9] = {adcY,2},
+  [0xE9] = {adcShortoffY,3},
+  [0xD9] = {adcLongoffY,4},
+  [0xFB] = {ADDY,2},
+  [0xEB] = {ADDshortoffY,3},
+  [0xDB] = {ADDlongoffY,4},
+  [0xF4] = {ANDY,2},
+  [0xE4] = {ANDshortoffY,3},
+  [0xD4] = {ANDlongoffY,4},
+  [0x7C] = {INCY,2},
+  [0x6C] = {INCshortoffY,3},
+  [0x4C] = {INClongoffY,4},
+  [0x5C] = {INCWord_Y,2},
+  [0xF5] = {BCPY,2},
+  [0xE5] = {BCPshortoffY,3},
+  [0xD5] = {BCPlongoffY,4},
+  [0x10] = {BitComplement,4},
+  [0x12] = {BitComplement,4},
+  [0x14] = {BitComplement,4},
+  [0x16] = {BitComplement,4},
+  [0x18] = {BitComplement,4},
+  [0x1A] = {BitComplement,4},
+  [0x1C] = {BitComplement,4},
+  [0x1E] = {BitComplement,4},
+  [0x11] = {BCCM,4},
+  [0x13] = {BCCM,4},
+  [0x15] = {BCCM,4},
+  [0x17] = {BCCM,4},
+  [0x19] = {BCCM,4},
+  [0x1B] = {BCCM,4},
+  [0x1D] = {BCCM,4},
+  [0x1F] = {BCCM,4},
+  [0XFD] = {CALLY,2},
+  [0xED] = {CALLshortoffY,3},
+  [0XDD] = {CALLlongoffY,4},
+  [0x7F] = {CLRY,2},
+  [0x6F] = {CLRshortoffY,3},
+  [0x4F] = {CLRlongoffY,4},
+  [0X5F] = {CLRWY,2},
+  [0xF1] = {CPY,2},
+  [0xE1] = {CPshortoffY,3},
+  [0xD1] = {CPlongoffY,4},
+  [0xF3] = {CPWY,2},
+  [0xE3] = {CPWshortoffY_X,3},
+  [0xD3] = {CPWlongoffY_X,4},
+  [0xA3] = {CPwordY,4},
+  [0xB3] = {CPWshortmem_Y,3},
+  [0xC3] = {CPWlongmem_Y,4},
+  [0x73] = {CPLY,2},
+  [0x63] = {CPLshortoffY,3},
+  [0x43] = {CPLlongoffY,4},
+  [0x53] = {CPLWY,2},
+  [0x7A] = {DECY,2},
+  [0x6A] = {DECshortoffY,3},
+  [0x4A] = {DEClongoffY,4},
+  [0x5A] = {DECWY,2},
+  [0x62] = {DivideUnsignedY,2},
+  [0xFC] = {JPY,2},
+  [0xEC] = {JPshortoffY,3},
+  [0xDC] = {JPlongoffY,4},
+  [0x29] = {HalfCarry,3},
+  [0x2F] = {InterruptHigh,3},
+  [0x2E] = {InterurptLow,3},
+  [0x2D] = {InterruptMask,3},
+  [0x28] = {NotHalfCarry,3},
+  [0x2C] = {NotInterruptMask,3}
 
 };
 
 Opcode opcodeTable91[256] = {
-  [0xD9] = {ADCshortptrY,3,4},
-  [0xDB] = {ADDshortptrY,3,4},
-  [0xD4] = {ANDshortptrY,3,4},
-  [0x6C] = {INCshortptrY,3,4},
-  [0xD5] = {BCPshortptrY,3,4},
-  [0xDD] = {CALLshortptrY,3,6},
-  [0x6F] = {CLRshortptrY,3,4},
-  [0xD1] = {CPshortptrY,3,4},
-  [0xD3] = {CPWshortptrY_X,3,5},
-  [0xC3] = {CPWshortptr_Y,3,5},
-  [0x63] = {CPLshortptrY,3,4},
-  [0x6A] = {DECshortptrY,3,4},
-  [0xDC] = {JPshortptrY,3,5}
+  [0xD9] = {adcShortptrY,3},
+  [0xDB] = {ADDshortptrY,3},
+  [0xD4] = {ANDshortptrY,3},
+  [0x6C] = {INCshortptrY,3},
+  [0xD5] = {BCPshortptrY,3},
+  [0xDD] = {CALLshortptrY,3},
+  [0x6F] = {CLRshortptrY,3},
+  [0xD1] = {CPshortptrY,3},
+  [0xD3] = {CPWshortptrY_X,3},
+  [0xC3] = {CPWshortptr_Y,3},
+  [0x63] = {CPLshortptrY,3},
+  [0x6A] = {DECshortptrY,3},
+  [0xDC] = {JPshortptrY,3}
 };
 
 Opcode opcodeTable92[256] = {
-  [0xC9] = {ADCshortptr,3,4},
-  [0xD9] = {ADCshortptrX,3,4},
-  [0xCB] = {ADDshortptr,3,4},
-  [0xDB] = {ADDshortptrX,3,4},
-  [0xC4] = {ANDshortptr,3,4},
-  [0xD4] = {ANDshortptrX,3,4},
-  [0x3C] = {INCshortptr,3,4},
-  [0x6C] = {INCshortptrX,3,4},
-  [0xC5] = {BCPshortptr,3,4},
-  [0xD5] = {BCPshortptrX,3,4},
-  [0xCD] = {CALLshortptr,3,6},
-  [0xDD] = {CALLshortptrX,3,6},
-  [0x8D] = {CALLFlongptr,4,8},
-  [0x3F] = {CLRshortptr,3,4},
-  [0x6F] = {CLRshortptrX,3,4},
-  [0xC1] = {CPshortptr,3,4},
-  [0xD1] = {CPshortptrX,3,4},
-  [0xC3] = {CPWshortptr_X,3,5},
-  [0xD3] = {CPWshortptrX_Y,3,5},
-  [0x33] = {CPLshortptr,3,4},
-  [0x63] = {CPLshortptrX,3,4},
-  [0x3A] = {DECshortptr,3,4},
-  [0x6A] = {DECshortptrX,3,4},
-  [0xCC] = {JPshortptr,3,5},
-  [0xDC] = {JPshortptrX,3,5},
-  [0xAC] = {JPFlongptr,4,6}
+  [0xC9] = {adcShortptr,3},
+  [0xD9] = {adcShortptrX,3},
+  [0xCB] = {ADDshortptr,3},
+  [0xDB] = {ADDshortptrX,3},
+  [0xC4] = {ANDshortptr,3},
+  [0xD4] = {ANDshortptrX,3},
+  [0x3C] = {INCshortptr,3},
+  [0x6C] = {INCshortptrX,3},
+  [0xC5] = {BCPshortptr,3},
+  [0xD5] = {BCPshortptrX,3},
+  [0xCD] = {CALLshortptr,3},
+  [0xDD] = {CALLshortptrX,3},
+  [0x8D] = {CALLFlongptr,4},
+  [0x3F] = {CLRshortptr,3},
+  [0x6F] = {CLRshortptrX,3},
+  [0xC1] = {CPshortptr,3},
+  [0xD1] = {CPshortptrX,3},
+  [0xC3] = {CPWshortptr_X,3},
+  [0xD3] = {CPWshortptrX_Y,3},
+  [0x33] = {CPLshortptr,3},
+  [0x63] = {CPLshortptrX,3},
+  [0x3A] = {DECshortptr,3},
+  [0x6A] = {DECshortptrX,3},
+  [0xCC] = {JPshortptr,3},
+  [0xDC] = {JPshortptrX,3},
+  [0xAC] = {JPFlongptr,4}
 };
 
 Opcode opcodeTable[256] = {
-  [0xA9] = {ADCbyte,2 ,1},
-  [0xB9] = {ADCshortmem,2,1},
-  [0xC9] = {ADClongmem,3,1},
-  [0xF9] = {ADCX,1,1},
-  [0xE9] = {ADCshortoffX,2,1},
-  [0xD9] = {ADClongoffX,3,1},
-  [0x19] = {ADCshortoffSP,2,1},
-  [0xAB] = {ADDbyte,2,1},
-  [0xBB] = {ADDshortmem,2,1},
-  [0xCB] = {ADDlongmem,3,1},
-  [0xFB] = {ADDX,1,1},
-  [0xEB] = {ADDshortoffX,2,1},
-  [0xDB] = {ADDlongoffX,3,1},
-  [0x1B] = {ADDshortoffSP,2,1},
-  [0xA4] = {ANDbyte,2,1},
-  [0xB4] = {ANDshortmem,2,1},
-  [0xC4] = {ANDlongmem,3,1},
-  [0xF4] = {ANDX,1,1},
-  [0xE4] = {ANDshortoffX,2,1},
-  [0xD4] = {ANDlongoffX,3,1},
-  [0x14] = {ANDshortoffSP,2,1},
-  [0x4C] = {INCA,1,1},
-  [0X3C] = {INCshortmem,2,1},
-  [0x7C] = {INCX,1,1},
-  [0x6C] = {INCshortoffX,2,1},
-  [0x0C] = {INCshortoffSP,2,1},
-  [0x5C] = {INCWord_X,1,1},
-  [0x1C] = {ADDWword,3,2},
-  [0x5B] = {ADDWSP,2,2},
-  [0xA5] = {BCPbyte,2 ,1},
-  [0xB5] = {BCPshortmem,2,1},
-  [0xC5] = {BCPlongmem,3,1},
-  [0xF5] = {BCPX,1,1},
-  [0xE5] = {BCPshortoffX,2,1},
-  [0xD5] = {BCPlongoffX,3,1},
-  [0x15] = {BCPshortoffSP,2,1},
-  [0X8B] = {BREAK,1,1},
-  [0XCD] = {CALLlongmem,4,3},
-  [0XFD] = {CALLX,1,4},
-  [0XED] = {CALLshortoffX,2,4},
-  [0xDD] = {CALLlongoffX,3,4},
-  [0xAD] = {CALLR,2,4},
-  [0x8D] = {CALLFextmem,4,5},
-  [0x8C] = {CCF,1,1},
-  [0x4F] = {CLRA,1,1},
-  [0X3F] = {CLRshortmem,2,1},
-  [0x7F] = {CLRX,1,1},
-  [0x6F] = {CLRshortoffX,2,1},
-  [0x0F] = {CLRshortoffSP,2,1},
-  [0X5F] = {CLRWX,1,1},
-  [0xA1] = {CPbyte,2,1},
-  [0xB1] = {CPshortmem,2,1},
-  [0xC1] = {CPlongmem,3,1},
-  [0xF1] = {CPX,1,1},
-  [0xE1] = {CPshortoffX,2,1},
-  [0xD1] = {CPlongoffX,3,1},
-  [0x11] = {CPshortoffSP,2,1},
-  [0xA3] = {CPwordX,3,2},
-  [0xB3] = {CPWshortmemX,2,2},
-  [0xC3] = {CPWlongmemX,3,2},
-  [0x13] = {CPWshortoffSP_X,2,2},
-  [0xF3] = {CPWX,1,2},
-  [0xE3] = {CPWshortoffX_Y,2,2},
-  [0xD3] = {CPWlongoffX_Y,3,2},
-  [0x43] = {CPLA,1,1},
-  [0X33] = {CPLshortmem,2,1},
-  [0x73] = {CPLX,1,1},
-  [0x63] = {CPLshortoffX,2,1},
-  [0x03] = {CPLshortoffSP,2,1},
-  [0x53] = {CPLWX,1,2},
-  [0x4A] = {DECA,1,1},
-  [0X3A] = {DECshortmem,2,1},
-  [0x7A] = {DECX,1,1},
-  [0x6A] = {DECshortoffX,2,1},
-  [0x0A] = {DECshortoffSP,2,1},
-  [0x5A] = {DECWX,1,2},
-  [0x62] = {DivideUnsignedX,1,2},
-  [0x65] = {DivideSigned,1,2},
-  [0x41] = {EXG_X,1,1},
-  [0x61] = {EXG_Y,1,1},
-  [0x31] = {EXG_longmem,3,3},
-  [0x51] = {EXGW,1,1},
-  [0x8E] = {HALT,1,10},
-  [0x82] = {Interrupt,4,2},
-  [0x80] = {InterruptReturn,1,11},
-  [0xCC] = {JPlongmem,3,1},
-  [0xFC] = {JPX,1,1},
-  [0xEC] = {JPshortoffX,2,1},
-  [0xDC] = {JPlongoffX,3,1},
-  [0xAC] = {JPFextmem,4,2},
-  [0x20] = {JumpRelativeAlways,2,2},
-  [0x25] = {Carry,2,1/2},
-  [0x27] = {Equal,2,1/2},
-  [0x21] = {False,2,1/2},
-  [0x2B] = {Minus,2,1/2},
-  [0x24] = {NotCarry,2,1/2},
-  [0x26] = {NotEqual,2,1/2},
-  [0x28] = {NotOverflow,2,1/2},
-  [0x2A] = {Plus,2,1/2},
-  [0x2E] = {SignGreaterOrEqual,2,1/2},
-  [0x2C] = {SignGreaterThan,2,1/2},
-  [0x2D] = {SignLowerOrEqual,2,1/2},
-  [0x2F] = {SignLowerThan,2,1/2},
-  [0x22] = {UnsignGreaterThan,2,1/2},
-  [0x23] = {UsignLowerOrEqual,2,1/2},
-  [0x29] = {Overflow,2,1/2},
-  [0x25] = {carry,2,1}
+  [0xA9] = {adcByte,2 },
+  [0xB9] = {adcShortmem,2},
+  [0xC9] = {adcLongmem,3},
+  [0xF9] = {adcX,1},
+  [0xE9] = {adcShortoffX,2},
+  [0xD9] = {adcLongoffX,3},
+  [0x19] = {adcShortoffSP,2},
+  [0xAB] = {ADDbyte,2},
+  [0xBB] = {ADDshortmem,2},
+  [0xCB] = {ADDlongmem,3},
+  [0xFB] = {ADDX,1},
+  [0xEB] = {ADDshortoffX,2},
+  [0xDB] = {ADDlongoffX,3},
+  [0x1B] = {ADDshortoffSP,2},
+  [0xA4] = {ANDbyte,2},
+  [0xB4] = {ANDshortmem,2},
+  [0xC4] = {ANDlongmem,3},
+  [0xF4] = {ANDX,1},
+  [0xE4] = {ANDshortoffX,2},
+  [0xD4] = {ANDlongoffX,3},
+  [0x14] = {ANDshortoffSP,2},
+  [0x4C] = {INCA,1},
+  [0X3C] = {INCshortmem,2},
+  [0x7C] = {INCX,1},
+  [0x6C] = {INCshortoffX,2},
+  [0x0C] = {INCshortoffSP,2},
+  [0x5C] = {INCWord_X,1},
+  [0x1C] = {ADDWword,3},
+  [0x5B] = {ADDWSP,2},
+  [0xA5] = {BCPbyte,2 },
+  [0xB5] = {BCPshortmem,2},
+  [0xC5] = {BCPlongmem,3},
+  [0xF5] = {BCPX,1},
+  [0xE5] = {BCPshortoffX,2},
+  [0xD5] = {BCPlongoffX,3},
+  [0x15] = {BCPshortoffSP,2},
+  [0X8B] = {BREAK,1},
+  [0XCD] = {CALLlongmem,4},
+  [0XFD] = {CALLX,1},
+  [0XED] = {CALLshortoffX,2},
+  [0xDD] = {CALLlongoffX,3},
+  [0xAD] = {CALLR,2},
+  [0x8D] = {CALLFextmem,4},
+  [0x8C] = {CCF,1},
+  [0x4F] = {CLRA,1},
+  [0X3F] = {CLRshortmem,2},
+  [0x7F] = {CLRX,1},
+  [0x6F] = {CLRshortoffX,2},
+  [0x0F] = {CLRshortoffSP,2},
+  [0X5F] = {CLRWX,1},
+  [0xA1] = {CPbyte,2},
+  [0xB1] = {CPshortmem,2},
+  [0xC1] = {CPlongmem,3},
+  [0xF1] = {CPX,1},
+  [0xE1] = {CPshortoffX,2},
+  [0xD1] = {CPlongoffX,3},
+  [0x11] = {CPshortoffSP,2},
+  [0xA3] = {CPwordX,3},
+  [0xB3] = {CPWshortmemX,2},
+  [0xC3] = {CPWlongmemX,3},
+  [0x13] = {CPWshortoffSP_X,2},
+  [0xF3] = {CPWX,1},
+  [0xE3] = {CPWshortoffX_Y,2},
+  [0xD3] = {CPWlongoffX_Y,3},
+  [0x43] = {CPLA,1},
+  [0X33] = {CPLshortmem,2},
+  [0x73] = {CPLX,1},
+  [0x63] = {CPLshortoffX,2},
+  [0x03] = {CPLshortoffSP,2},
+  [0x53] = {CPLWX,1},
+  [0x4A] = {DECA,1},
+  [0X3A] = {DECshortmem,2},
+  [0x7A] = {DECX,1},
+  [0x6A] = {DECshortoffX,2},
+  [0x0A] = {DECshortoffSP,2},
+  [0x5A] = {DECWX,1},
+  [0x62] = {DivideUnsignedX,1},
+  [0x65] = {DivideSigned,1},
+  [0x41] = {EXG_X,1},
+  [0x61] = {EXG_Y,1},
+  [0x31] = {EXG_longmem,3},
+  [0x51] = {EXGW,1},
+  [0x8E] = {HALT,1},
+  [0x82] = {Interrupt,4},
+  [0x80] = {InterruptReturn,1},
+  [0xCC] = {JPlongmem,3},
+  [0xFC] = {JPX,1},
+  [0xEC] = {JPshortoffX,2},
+  [0xDC] = {JPlongoffX,3},
+  [0xAC] = {JPFextmem,4},
+  [0x20] = {JumpRelativeAlways,2},
+  [0x25] = {Carry,2},
+  [0x27] = {Equal,2},
+  [0x21] = {False,2},
+  [0x2B] = {Minus,2},
+  [0x24] = {NotCarry,2},
+  [0x26] = {NotEqual,2},
+  [0x28] = {NotOverflow,2},
+  [0x2A] = {Plus,2},
+  [0x2E] = {SignGreaterOrEqual,2},
+  [0x2C] = {SignGreaterThan,2},
+  [0x2D] = {SignLowerOrEqual,2},
+  [0x2F] = {SignLowerThan,2},
+  [0x22] = {UnsignGreaterThan,2},
+  [0x23] = {UsignLowerOrEqual,2},
+  [0x29] = {Overflow,2},
+  [0x25] = {carry,2}
 
 
 };
@@ -404,7 +405,7 @@ char* disassembler(uint8_t **ptrptrcode){       //check the first byte so that c
 
                /*ADC*/
 
-char* ADCbyte(uint8_t *code){           //length 2
+char* adcByte(uint8_t *code){           //length 2
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,#$%x", code[1]);
@@ -412,7 +413,7 @@ char* ADCbyte(uint8_t *code){           //length 2
   return buffer;
 }
 
-char* ADCshortmem(uint8_t *code){
+char* adcShortmem(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,$%x", code[1]);
@@ -420,7 +421,7 @@ char* ADCshortmem(uint8_t *code){
   return buffer;
 }
 
-char* ADClongmem(uint8_t *code){        //length 3
+char* adcLongmem(uint8_t *code){        //length 3
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,$%x%x", code[1],code[2]);
@@ -428,7 +429,7 @@ char* ADClongmem(uint8_t *code){        //length 3
   return buffer;
 }
 
-char* ADCX(uint8_t *code){            //length 1
+char* adcX(uint8_t *code){            //length 1
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,(X)");
@@ -436,7 +437,7 @@ char* ADCX(uint8_t *code){            //length 1
   return buffer;
 }
 
-char* ADCshortoffX(uint8_t *code){
+char* adcShortoffX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x,X)", code[1]);
@@ -444,7 +445,7 @@ char* ADCshortoffX(uint8_t *code){
   return buffer;
 }
 
-char* ADClongoffX(uint8_t *code){
+char* adcLongoffX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x%x,X)", code[1],code[2]);
@@ -452,7 +453,7 @@ char* ADClongoffX(uint8_t *code){
   return buffer;
 }
 
-char* ADCY(uint8_t *code){
+char* adcY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,(Y)");
@@ -460,7 +461,7 @@ char* ADCY(uint8_t *code){
   return buffer;
 }
 
-char* ADCshortoffY(uint8_t *code){
+char* adcShortoffY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x,Y)",code[2]);
@@ -468,7 +469,7 @@ char* ADCshortoffY(uint8_t *code){
   return buffer;
 }
 
-char* ADClongoffY(uint8_t *code){        //length 4
+char* adcLongoffY(uint8_t *code){        //length 4
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x%x,Y)", code[2],code[3]);
@@ -476,7 +477,7 @@ char* ADClongoffY(uint8_t *code){        //length 4
   return buffer;
 }
 
-char* ADCshortoffSP(uint8_t *code){
+char* adcShortoffSP(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,($%x,SP)", code[1]);
@@ -484,7 +485,7 @@ char* ADCshortoffSP(uint8_t *code){
   return buffer;
 }
 
-char* ADCshortptr(uint8_t *code){
+char* adcShortptr(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x.w]", code[2]);
@@ -492,7 +493,7 @@ char* ADCshortptr(uint8_t *code){
   return buffer;
 }
 
-char* ADClongptr(uint8_t *code){
+char* adcLongptr(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x%x.w]", code[2],code[3]);
@@ -500,7 +501,7 @@ char* ADClongptr(uint8_t *code){
   return buffer;
 }
 
-char* ADCshortptrX(uint8_t *code){
+char* adcShortptrX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x.w],X",code[2]);
@@ -508,7 +509,7 @@ char* ADCshortptrX(uint8_t *code){
   return buffer;
 }
 
-char* ADClongptrX(uint8_t *code){
+char* adcLongptrX(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x%x.w],X",code[2],code[3]);
@@ -516,7 +517,7 @@ char* ADClongptrX(uint8_t *code){
   return buffer;
 }
 
-char* ADCshortptrY(uint8_t *code){
+char* adcShortptrY(uint8_t *code){
 
   buffer = malloc(1024);
   sprintf(buffer,"ADC  A,[$%x.w],Y",code[2]);
@@ -1100,7 +1101,8 @@ char* BitComplement(uint8_t *code){
   return buffer;
 }
 
-char* BCCM(uint8_t *code){        //copy carry bit to memory
+char* BCCM(uint8_t *code){
+                                  //copy carry bit to memory
 
   buffer = malloc(1024);
   sprintf(buffer,"BCCM $%x%x,#2", code[2],code[3]);

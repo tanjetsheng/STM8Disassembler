@@ -8,27 +8,27 @@ typedef struct Opcode Opcode;
 struct Opcode{
   char* (*execute)(uint8_t *code);
   int length;
-  int cycle;
+
 };
 char* buffer;
 char *str;
 int i;
         //ADC
-char* ADCbyte(uint8_t *code);
-char* ADCshortmem(uint8_t *code);
-char* ADClongmem(uint8_t *code);
-char* ADCX(uint8_t *code);
-char* ADCshortoffX(uint8_t *code);
-char* ADClongoffX(uint8_t *code);
-char* ADCY(uint8_t *code);
-char* ADCshortoffY(uint8_t *code);
-char* ADClongoffY(uint8_t *code);
-char* ADCshortoffSP(uint8_t *code);
-char* ADCshortptr(uint8_t *code);
-char* ADClongptr(uint8_t *code);
-char* ADCshortptrX(uint8_t *code);
-char* ADClongptrX(uint8_t *code);
-char* ADCshortptrY(uint8_t *code);
+char* adcByte(uint8_t *code);
+char* adcShortmem(uint8_t *code);
+char* adcLongmem(uint8_t *code);
+char* adcX(uint8_t *code);
+char* adcShortoffX(uint8_t *code);
+char* adcLongoffX(uint8_t *code);
+char* adcY(uint8_t *code);
+char* adcShortoffY(uint8_t *code);
+char* adcLongoffY(uint8_t *code);
+char* adcShortoffSP(uint8_t *code);
+char* adcShortptr(uint8_t *code);
+char* adcLongptr(uint8_t *code);
+char* adcShortptrX(uint8_t *code);
+char* adcLongptrX(uint8_t *code);
+char* adcShortptrY(uint8_t *code);
 
       //ADD
 char* ADDbyte(uint8_t *code);

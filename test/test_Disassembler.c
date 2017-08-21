@@ -44,6 +44,8 @@ void test_error_in_2nd_code_expect_error_code(void)
   }
   Catch(ex) {
     dumpErrorMessage(ex);
+    TEST_ASSERT_EQUAL(ERR_INVALID_OPERAND,errorcode);
+    TEST_ASSERT_EQUAL_STRING("invalid instruction 0x99",message);
   }
 }
 
@@ -82,3 +84,10 @@ void test_ADDWwordY_DEClongoffX_ANDY_INCshortptr_CPshortptr_ANDX_expect_pass_(vo
 	TEST_ASSERT_EQUAL(6,i);
 }
 
+void test_JPX_DECX_ANDshortptr_DECY_JPlongptrX_expect_pass_(void)
+{
+	uint8_t memory[]= {0xFC,0x7A,0x92,0xC4,0x56,0x90,0x7A,0x72,0xDC,0x56,0x23};
+	uint8_t *code = memory;
+	TEST_ASSERT_EQUAL_STRING("JP(X)\nDEC(X)\nAND  A,[$56.w]\nDEC(Y)\nJP[$5623.w],X\n",disassembleNCodes(&code,5));
+	TEST_ASSERT_EQUAL(5,i);
+}
