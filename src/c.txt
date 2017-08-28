@@ -8,6 +8,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include "error.h"
+#include "Token.h"
 #include <ctype.h>
 
 
@@ -2476,4 +2477,50 @@ char* LDshortptrY(uint8_t *code){
   sprintf(buffer,"LD  A,[$%x.w],Y",code[2]);
   printf("LD  A,[$%x.w],Y\n",code[2]);
   return buffer;
+}
+#include <malloc.h>
+#include <stdarg.h>
+#include "exception.h"
+#include "CException.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+
+
+void throwException(int errorCode, void *data, char *message,...) {
+  va_list args;
+  char *buffer;
+  int length;
+  Exception *e;
+
+  va_start(args, message);
+  e = malloc(sizeof(Exception));
+
+  length = vsnprintf(buffer, 0, message, args);
+  buffer = malloc(length + 1);
+  vsnprintf(buffer, length + 1, message, args);
+
+  e->msg = buffer;
+  e->errorCode = errorCode;
+  e->data = data;
+
+  Throw(e);
+}
+
+
+void freeException(Exception *e) {
+  if(e) {
+    if(e->msg)
+      free(e->msg);
+    free(e);
+  }
+}
+void dumpErrorMessage(Exception *e) {
+  printf("%s\n\t",e->msg);
+  message = e->msg;
+  errorcode = e->errorCode;
+
 }

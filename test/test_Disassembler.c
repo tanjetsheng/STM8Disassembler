@@ -10,7 +10,6 @@
 #include <stdarg.h>
 #include <string.h>
 #include "error.h"
-#include "Token.h"
 #include <ctype.h>
 
 void setUp(void)
@@ -58,6 +57,8 @@ void test_error_in_code1_expect_error_code(void)
   }
   Catch(ex) {
     dumpErrorMessage(ex);
+    TEST_ASSERT_EQUAL(ERR_INVALID_OPERAND,errorcode);
+    TEST_ASSERT_EQUAL_STRING("invalid instruction 0xff",message);
   }
 }
 
