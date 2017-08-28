@@ -89,7 +89,9 @@ Opcode opcodeTable72[256] = {
   [0x6A] = {DEClongptrX,4},
   [0xCC] = {JPlongptr,4},
   [0xDC] = {JPlongptrX,4},
-  [0xD6] = {LDshortptrY,4}
+  [0xD6] = {LDshortptrY,4},
+  [0xC6] = {LDlongptr,4},
+  [0xD6] = {LDlongptrX,4}
 
 
 };
@@ -159,7 +161,10 @@ Opcode opcodeTable90[256] = {
   [0x2E] = {InterurptLow,3},
   [0x2D] = {InterruptMask,3},
   [0x28] = {NotHalfCarry,3},
-  [0x2C] = {NotInterruptMask,3}
+  [0x2C] = {NotInterruptMask,3},
+  [0xF6] = {LDY,2},
+  [0xE6] = {LDshortoffY,3},
+  [0xD6] = {LDlongoffY,4}
 
 };
 
@@ -176,7 +181,8 @@ Opcode opcodeTable91[256] = {
   [0xC3] = {CPWshortptr_Y,3},
   [0x63] = {CPLshortptrY,3},
   [0x6A] = {DECshortptrY,3},
-  [0xDC] = {JPshortptrY,3}
+  [0xDC] = {JPshortptrY,3},
+  [0xD6] = {LDshortptrY,3}
 };
 
 Opcode opcodeTable92[256] = {
@@ -205,7 +211,9 @@ Opcode opcodeTable92[256] = {
   [0x6A] = {DECshortptrX,3},
   [0xCC] = {JPshortptr,3},
   [0xDC] = {JPshortptrX,3},
-  [0xAC] = {JPFlongptr,4}
+  [0xAC] = {JPFlongptr,4},
+  [0xC6] = {LDshortptr,3},
+  [0xD6] = {LDlongptrX,3}
 };
 
 Opcode opcodeTable[256] = {
@@ -315,7 +323,14 @@ Opcode opcodeTable[256] = {
   [0x22] = {UnsignGreaterThan,2},
   [0x23] = {UsignLowerOrEqual,2},
   [0x29] = {Overflow,2},
-  [0x25] = {carry,2}
+  [0x25] = {carry,2},
+  [0xA6] = {LDbyte,2},
+  [0xB6] = {LDshortmem,2},
+  [0xC6] = {LDlongmem,3},
+  [0xF6] = {LDX,1},
+  [0xE6] = {LDshortoffX,2},
+  [0xD6] = {LDlongoffX,3},
+  [0x7B] = {LDshortoffSP,2}
 
 
 };
